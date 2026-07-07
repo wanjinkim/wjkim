@@ -1,8 +1,181 @@
-<!doctype html><html><head><meta charset='utf-8'><title>Portfolio</title>
-<style>body{font-family:Arial;background:#0d1117;color:#e6edf3;max-width:900px;margin:auto;padding:40px}a{display:block;background:#161b22;padding:16px;margin:12px 0;color:#58a6ff;text-decoration:none;border-radius:8px}</style></head>
-<body><h1>Web Application Portfolio</h1>
-<a href="frontend.md">Frontend Portfolio</a>
-<a href="backend.md">Backend Portfolio</a>
-<a href="common-improve.md">Common Module Improvement</a>
-<a href="api-improve.md">REST API Refactoring</a>
-</body></html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wanjin Kim | Portfolio</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI, sans-serif;
+}
+
+body{
+    background:#0d1117;
+    color:#e6edf3;
+}
+
+.container{
+    width:1100px;
+    margin:auto;
+}
+
+header{
+    padding:70px 0;
+}
+
+h1{
+    font-size:48px;
+}
+
+.sub{
+    color:#8b949e;
+    margin-top:10px;
+    font-size:18px;
+}
+
+.tech{
+    margin-top:25px;
+}
+
+.tech span{
+    display:inline-block;
+    margin:5px;
+    padding:8px 15px;
+    background:#161b22;
+    border:1px solid #30363d;
+    border-radius:20px;
+}
+
+h2{
+    margin:60px 0 20px;
+    font-size:30px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+}
+
+.card{
+    background:#161b22;
+    border:1px solid #30363d;
+    border-radius:12px;
+    padding:25px;
+    transition:.25s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    border-color:#58a6ff;
+}
+
+.card h3{
+    color:#58a6ff;
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#8b949e;
+    line-height:1.7;
+    margin-bottom:25px;
+}
+
+.btn{
+    display:inline-block;
+    padding:10px 20px;
+    background:#238636;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+}
+
+footer{
+    margin:80px 0 40px;
+    color:#8b949e;
+    text-align:center;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+<h1>Wanjin Kim</h1>
+
+<div class="sub">
+Web Application Developer
+</div>
+
+<div class="tech">
+<span>Frontend</span>
+<span>Backend</span>
+<span>REST API</span>
+<span>PHP</span>
+<span>Javascript</span>
+<span>SQLite</span>
+<span>Linux</span>
+</div>
+
+</header>
+
+<h2>Portfolio</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Frontend Portfolio</h3>
+<p>
+실시간 UI, WebSocket, MutationObserver,
+비동기 처리 및 사용자 경험 개선 사례를 정리했습니다.
+</p>
+<a class="btn" href="frontend.md">View</a>
+</div>
+
+<div class="card">
+<h3>Backend Portfolio</h3>
+<p>
+PHP 기반 Web Application 개발,
+REST API, SQLite 연동 및 서버 로직 구현 내용을 담았습니다.
+</p>
+<a class="btn" href="backend.md">View</a>
+</div>
+
+<div class="card">
+<h3>REST API Refactoring</h3>
+<p>
+60여 개 REST API를 객체지향 구조로 리팩토링하고
+유지보수성과 확장성을 개선한 사례입니다.
+</p>
+<a class="btn" href="api-improve.md">View</a>
+</div>
+
+<div class="card">
+<h3>Common Module Improvement</h3>
+<p>
+19개 공통 모듈을 리팩토링하며
+캡슐화와 책임 분리를 적용한 개선 사례입니다.
+</p>
+<a class="btn" href="common-improve.md">View</a>
+</div>
+
+</div>
+
+<footer>
+
+© 2025 Wanjin Kim Portfolio
+
+</footer>
+
+</div>
+
+</body>
+</html>
