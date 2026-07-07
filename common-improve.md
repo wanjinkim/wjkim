@@ -414,7 +414,9 @@ class DatabaseSocketClient {
 <?php
 preg_match_all("#\{(.*?)\}#", $text, $matches);
 foreach( $matches[1] as $match ) {
+```text
     $text = preg_replace("#\{{$match}\}#", constant("Lang\\". $match), $text);
+```
 }
 ?>
 ```
