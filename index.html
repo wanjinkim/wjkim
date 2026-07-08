@@ -6,174 +6,269 @@
 <title>Wanjin Kim | Portfolio</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Segoe UI, sans-serif;
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    background:#0d1117;
-    color:#e6edf3;
+:root {
+  --bg:      #0d1117;
+  --surface: #161b22;
+  --border:  #30363d;
+  --text:    #e6edf3;
+  --muted:   #8b949e;
+  --accent:  #58a6ff;
+  --green:   #238636;
 }
 
-.container{
-    width:1100px;
-    margin:auto;
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
 }
 
-header{
-    padding:70px 0;
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 24px;
 }
 
-h1{
-    font-size:48px;
+/* ─── Header ─── */
+header {
+  padding: 90px 0 70px;
 }
 
-.sub{
-    color:#8b949e;
-    margin-top:10px;
-    font-size:18px;
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #58a6ff 0%, #3fb950 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 24px;
+  letter-spacing: -1px;
 }
 
-.tech{
-    margin-top:25px;
+h1 {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -.5px;
 }
 
-.tech span{
-    display:inline-block;
-    margin:5px;
-    padding:8px 15px;
-    background:#161b22;
-    border:1px solid #30363d;
-    border-radius:20px;
+.sub {
+  color: var(--muted);
+  margin-top: 8px;
+  font-size: 18px;
 }
 
-h2{
-    margin:60px 0 20px;
-    font-size:30px;
+.tech {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:25px;
+.tech span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 15px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13.5px;
+  color: var(--muted);
+  transition: border-color .2s, color .2s;
 }
 
-.card{
-    background:#161b22;
-    border:1px solid #30363d;
-    border-radius:12px;
-    padding:25px;
-    transition:.25s;
+.tech span:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
-.card:hover{
-    transform:translateY(-5px);
-    border-color:#58a6ff;
+/* ─── Section title ─── */
+.section-header {
+  margin: 64px 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.card h3{
-    color:#58a6ff;
-    margin-bottom:15px;
+.section-header h2 {
+  font-size: 28px;
+  font-weight: 600;
 }
 
-.card p{
-    color:#8b949e;
-    line-height:1.7;
-    margin-bottom:25px;
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
 }
 
-.btn{
-    display:inline-block;
-    padding:10px 20px;
-    background:#238636;
-    color:white;
-    text-decoration:none;
-    border-radius:6px;
+/* ─── Grid ─── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
-footer{
-    margin:80px 0 40px;
-    color:#8b949e;
-    text-align:center;
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  transition: transform .25s, border-color .25s, box-shadow .25s;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 32px rgba(88,166,255,.08);
+}
+
+.card-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.card h3 {
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.card p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 14px;
+  flex: 1;
+  margin-bottom: 24px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  background: var(--green);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 13.5px;
+  font-weight: 500;
+  width: fit-content;
+  transition: background .2s, transform .15s;
+}
+
+.btn:hover {
+  background: #2ea043;
+  transform: translateY(-1px);
+}
+
+.btn svg { opacity: .8; }
+
+/* ─── Footer ─── */
+footer {
+  margin: 80px 0 40px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 14px;
+  border-top: 1px solid var(--border);
+  padding-top: 40px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 700px) {
+  h1 { font-size: 32px; }
+  .grid { grid-template-columns: 1fr; }
 }
 </style>
 
 </head>
-
 <body>
 
 <div class="container">
 
-<header>
+  <header>
+    <div class="avatar">WK</div>
+    <h1>Wanjin Kim</h1>
+    <div class="sub">Web Application Developer · PHP / JavaScript / Linux</div>
+    <div class="tech">
+      <span>🖥️ Frontend</span>
+      <span>⚙️ Backend</span>
+      <span>🔌 REST API</span>
+      <span>🐘 PHP</span>
+      <span>🟨 JavaScript</span>
+      <span>🗄️ SQLite</span>
+      <span>🐧 Linux</span>
+    </div>
+  </header>
 
-<h1>Wanjin Kim</h1>
+  <div class="section-header">
+    <h2>Portfolio</h2>
+    <div class="section-line"></div>
+  </div>
 
-<div class="sub">
-Web Application Developer
-</div>
+  <div class="grid">
 
-<div class="tech">
-<span>Frontend</span>
-<span>Backend</span>
-<span>REST API</span>
-<span>PHP</span>
-<span>Javascript</span>
-<span>SQLite</span>
-<span>Linux</span>
-</div>
+    <div class="card">
+      <div class="card-icon">🎨</div>
+      <h3>Frontend Portfolio</h3>
+      <p>실시간 UI, WebSocket, MutationObserver,<br>
+      비동기 처리 및 사용자 경험 개선 사례를 정리했습니다.</p>
+      <a class="btn" href="viewer.html?file=fe_portfolio.md">
+        View
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </a>
+    </div>
 
-</header>
+    <div class="card">
+      <div class="card-icon">⚙️</div>
+      <h3>Backend Portfolio</h3>
+      <p>PHP 기반 Web Application 개발,<br>
+      REST API, SQLite 연동 및 서버 로직 구현 내용을 담았습니다.</p>
+      <a class="btn" href="viewer.html?file=be_portfolio.md">
+        View
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </a>
+    </div>
 
-<h2>Portfolio</h2>
+    <div class="card">
+      <div class="card-icon">🔌</div>
+      <h3>REST API Refactoring</h3>
+      <p>60여 개 REST API를 객체지향 구조로 리팩토링하고<br>
+      유지보수성과 확장성을 개선한 사례입니다.</p>
+      <a class="btn" href="viewer.html?file=api_improve.md">
+        View
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </a>
+    </div>
 
-<div class="grid">
+    <div class="card">
+      <div class="card-icon">🧩</div>
+      <h3>Common Module Improvement</h3>
+      <p>19개 공통 모듈을 리팩토링하며<br>
+      캡슐화와 책임 분리를 적용한 개선 사례입니다.</p>
+      <a class="btn" href="viewer.html?file=common_improve.md">
+        View
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </a>
+    </div>
 
-<div class="card">
-<h3>Frontend Portfolio</h3>
-<p>
-실시간 UI, WebSocket, MutationObserver,
-비동기 처리 및 사용자 경험 개선 사례를 정리했습니다.
-</p>
-<a class="btn" href="frontend.md">View</a>
-</div>
+  </div>
 
-<div class="card">
-<h3>Backend Portfolio</h3>
-<p>
-PHP 기반 Web Application 개발,
-REST API, SQLite 연동 및 서버 로직 구현 내용을 담았습니다.
-</p>
-<a class="btn" href="backend.md">View</a>
-</div>
-
-<div class="card">
-<h3>REST API Refactoring</h3>
-<p>
-60여 개 REST API를 객체지향 구조로 리팩토링하고
-유지보수성과 확장성을 개선한 사례입니다.
-</p>
-<a class="btn" href="api-improve.md">View</a>
-</div>
-
-<div class="card">
-<h3>Common Module Improvement</h3>
-<p>
-19개 공통 모듈을 리팩토링하며
-캡슐화와 책임 분리를 적용한 개선 사례입니다.
-</p>
-<a class="btn" href="common-improve.md">View</a>
-</div>
-
-</div>
-
-<footer>
-
-© 2026 Wanjin Kim Portfolio
-
-</footer>
+  <footer>
+    © 2026 Wanjin Kim &nbsp;·&nbsp; Built with HTML / CSS / JS
+  </footer>
 
 </div>
 
