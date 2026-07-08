@@ -1,7 +1,7 @@
 # 백엔드 핵심 통신 및 유틸리티 포트폴리오 (Backend)
 
 본 문서는 실무에서 구현한 핵심 모듈과 유틸리티 로직을 정리한 포트폴리오입니다.
-## 2. Integrated System Control (시스템 제어 및 연동)
+## 1. Integrated System Control (시스템 제어 및 연동)
 
 ### 💡 개요
 프론트엔드와 하드웨어 간의 복잡한 통신을 중계하고, 시스템 자원을 안전하게 관리하는 백엔드 프로세스를 구축했습니다.
@@ -26,7 +26,7 @@ public function is_compatible_version($current, $required) {
 ```
 
 ---
-## 3. Data Integrity & Management (데이터 무결성 관리)
+## 2. Data Integrity & Management (데이터 무결성 관리)
 
 ### 💡 개요
 임베디드 리눅스 환경에서 설정값의 안정적인 저장과 동기화를 보장하는 로직을 개발했습니다.
@@ -51,7 +51,7 @@ try {
 ```
 
 ---
-## 4. Async Task Token System (비동기 중복 방지 시스템)
+## 3. Async Task Token System (비동기 중복 방지 시스템)
 
 ### 💡 개요
 네트워크 지연이나 사용자 중복 클릭으로 인해 발생할 수 있는 데이터 오염을 방지하기 위해 타임스탬프 기반의 비동기 토큰 검증 시스템을 도입했습니다.
@@ -79,7 +79,7 @@ break;
 ```
 
 ---
-## 5. Multi-Channel Database Schema (멀티채널 대응 아키텍처)
+## 4. Multi-Channel Database Schema (멀티채널 대응 아키텍처)
 
 ### 💡 개요
 단일 채널 장비부터 4채널 이상의 고성능 장비까지 동일한 코드로 대응할 수 있는 동적 데이터베이스 참조 시스템을 설계했습니다.
@@ -111,7 +111,7 @@ foreach($used_server_db as $db_name) {
 ```
 
 ---
-## 6. High-Security Ticket & Session Management (고수준 보안 및 세션 관리)
+## 5. High-Security Ticket & Session Management (고수준 보안 및 세션 관리)
 
 ### 💡 개요
 외부 공격으로부터 시스템을 보호하고 실시간 세션 정합성을 유지하기 위해 정밀한 보안 필터링 시스템을 구축했습니다.
@@ -134,7 +134,7 @@ session_write_close();
 ```
 
 ---
-## 7. Version Compatibility & API Exception Framework (버전 관리 및 예외 처리 프레임워크)
+## 6. Version Compatibility & API Exception Framework (버전 관리 및 예외 처리 프레임워크)
 
 ### 💡 개요
 컨트롤러와 장치 간의 버전 불일치로 인한 시스템 충돌을 방지하고, 모든 API 통신에서 발생하는 예외를 체계적으로 관리하는 구조를 설계했습니다.
@@ -159,7 +159,7 @@ public function is_compatible_version($current, $supported) {
 ```
 
 ---
-## 8. Automated API Authentication & Device Validation (API 보안 및 장치 검증 자동화)
+## 7. Automated API Authentication & Device Validation (API 보안 및 장치 검증 자동화)
 
 ### 💡 개요
 장치 간 통신 시 발생할 수 있는 무단 접근을 방지하기 위해 통신 전 단계에서 장치 등록 여부와 API 키 유효성을 자동으로 검사하는 보안 모듈을 설계했습니다.
@@ -186,7 +186,7 @@ public function canUseAPI($_response) {
 ```
 
 ---
-## 9. Hierarchical Memory Management (계층형 저장소 정보 수집)
+## 8. Hierarchical Memory Management (계층형 저장소 정보 수집)
 
 ### 💡 개요
 내부 메모리와 외부 SD 카드가 혼용되는 임베디드 환경에서, 통합된 저장소 정보를 제공하기 위한 동적 데이터 수집 아키텍처를 구축했습니다.
@@ -213,7 +213,7 @@ break;
 ```
 
 ---
-## 10. Resource Duplicate Prevention & File Integrity (자원 중복 방지 및 파일 무결성)
+## 9. Resource Duplicate Prevention & File Integrity (자원 중복 방지 및 파일 무결성)
 
 ### 💡 개요
 시스템 내 동일한 이름의 음원 파일이 중복 생성되어 설정이 꼬이는 문제를 방지하기 위해 서버 측 선검증 로직을 강화했습니다.
@@ -245,7 +245,7 @@ if (!empty($duplicate_files)) {
 ```
 
 ---
-## 11. Dynamic Configuration Orchestration (동적 설정 오케스트레이션)
+## 10. Dynamic Configuration Orchestration (동적 설정 오케스트레이션)
 
 ### 💡 개요
 사용자의 UI 조작(정렬, 필터링 등) 결과를 시스템 설정 파일(`json`)에 즉시 반영하고 실시간으로 재색인하는 로직을 구축했습니다.
@@ -275,7 +275,7 @@ break;
 ```
 
 ---
-## 12. TTL-based Temporary Resource Management (임시 자원 생명주기 관리)
+## 11. TTL-based Temporary Resource Management (임시 자원 생명주기 관리)
 
 ### 💡 개요
 TTS 즉시 송출을 위해 생성된 임시 음원 파일이 시스템 자원을 점유하지 않도록, 방송 종료 시점에 자동으로 파기하는 스마트 클린업 시스템을 구축했습니다.
@@ -304,7 +304,7 @@ if ($type === "reset_tts_play_info") {
 ```
 
 ---
-## 13. Multi-instance State Synchronization (JSON 기반 멀티 인스턴스 동기화)
+## 12. Multi-instance State Synchronization (JSON 기반 멀티 인스턴스 동기화)
 
 ### 💡 개요
 여러 명의 관리자가 동시에 접속한 환경에서 방송 상태와 설정값이 모든 클라이언트에 동일하게 보이도록 중앙 집중형 상태 관리 엔진을 구현했습니다.
@@ -333,7 +333,7 @@ break;
 ```
 
 ---
-## 14. Cross-Controller Resource Validation Engine (교차 컨트롤러 자원 검증 엔진)
+## 13. Cross-Controller Resource Validation Engine (교차 컨트롤러 자원 검증 엔진)
 
 ### 💡 개요
 동일한 음원 자원이 여러 컨트롤러의 스케줄러에 등록되어 사용 중일 경우, 실수로 삭제되는 것을 방지하기 위해 시스템 전체의 스케줄을 전수 조사하는 검증 엔진을 구축했습니다.
@@ -363,7 +363,7 @@ public function is_resource_in_use($filename) {
 ```
 
 ---
-## 15. Large Payload & Multipart Integration (대용량 파일 업로드 대응)
+## 14. Large Payload & Multipart Integration (대용량 파일 업로드 대응)
 
 ### 💡 개요
 TTS 음원이나 대용량 로그 파일을 시스템 간 전송할 때 데이터 유실을 방지하기 위해 `CURL`과 `multipart/form-data`를 통합한 고성능 통신 모듈을 구축했습니다.
@@ -391,7 +391,7 @@ $response = curl_exec($ch);
 ```
 
 ---
-## 16. Cross-Module Resource Ownership & Dependency Mapping (교차 모듈 자원 소유권 관리)
+## 15. Cross-Module Resource Ownership & Dependency Mapping (교차 모듈 자원 소유권 관리)
 
 ### 💡 개요
 특정 음원이 '삭제 가능'한 상태인지 판단하기 위해, 소스 관리 모듈 뿐만 아니라 버튼 설정, 스케줄러, EM 등 전역 모듈의 의존성을 역추적하는 관계형 검증 시스템을 구축했습니다.
@@ -421,7 +421,7 @@ break;
 ```
 
 ---
-## 17. Atomic Resource Management for Temporary Assets (임시 자원 원자적 관리)
+## 16. Atomic Resource Management for Temporary Assets (임시 자원 원자적 관리)
 
 ### 💡 개요
 TTS 즉시 송출과 같이 생명주기가 짧은 임시 자원의 생성부터 자동 파기까지의 전 과정을 원자적(Atomic)으로 관리하는 트랜잭션 스타일의 로직을 설계했습니다.
@@ -452,7 +452,7 @@ public function create_temporary_tts($text, $token) {
 ```
 
 ---
-## 18. High-Performance Status Polling & Sequence Sync (고성능 상태 폴링 및 동기화)
+## 17. High-Performance Status Polling & Sequence Sync (고성능 상태 폴링 및 동기화)
 
 ### 💡 개요
 수백 명의 사용자가 동시에 접속해도 시스템 부하를 최소화하면서 최신 상태를 유지하기 위해, 데이터 변경 시점만을 감지하여 전송하는 시퀀스 기반 폴링 시스템을 설계했습니다.
@@ -476,7 +476,7 @@ public function get_rtzone_seq() {
 ```
 
 ---
-## 19. Abstracted Audio Server Data Pipeline (추상화된 오디오 서버 데이터 파이프라인)
+## 18. Abstracted Audio Server Data Pipeline (추상화된 오디오 서버 데이터 파이프라인)
 
 ### 💡 개요
 다양한 종류의 오디오 서버(MP3, TTS, CDP 등)에서 발생하는 데이터를 단일한 규격으로 통합하여 프론트엔드로 전달하는 추상화된 데이터 파이프라인을 구축했습니다.
@@ -503,7 +503,7 @@ public function broadcast_source_info($source_obj) {
 ```
 
 ---
-## 20. Persistence Layer for UI State (세션 및 JSON 하이브리드 보존)
+## 19. Persistence Layer for UI State (세션 및 JSON 하이브리드 보존)
 
 ### 💡 개요
 사용자가 마지막으로 선택한 소스 장치나 방송 존의 설정을 페이지 새로고침 후에도 유지하기 위해 세션(휘발성)과 JSON(영구성)을 혼합한 상태 보존 레이어를 구축했습니다.
@@ -527,7 +527,7 @@ break;
 ```
 
 ---
-## 21. Inter-Device API Proxying & Orchestration (장치 간 API 프록시 및 오케스트레이션)
+## 20. Inter-Device API Proxying & Orchestration (장치 간 API 프록시 및 오케스트레이션)
 
 ### 💡 개요
 컨트롤러 장치에서 원격지에 위치한 소스 장치(Source Device)의 자원을 직접 제어하기 위해, CURL을 활용한 API 릴레이 및 오케스트레이션 엔진을 구축했습니다.
@@ -561,7 +561,7 @@ break;
 ```
 
 ---
-## 22. Shell-Integrated Speech Synthesis Pipeline (쉘 연동 음성 합성 파이프라인)
+## 21. Shell-Integrated Speech Synthesis Pipeline (쉘 연동 음성 합성 파이프라인)
 
 ### 💡 개요
 고수준 PHP 코드와 저수준 시스템 바이너리를 유기적으로 결합하여, 텍스트 입력부터 차임벨 믹싱까지의 전 과정을 자동화한 TTS 엔진을 구축했습니다.
@@ -584,7 +584,7 @@ $time_duration = sprintf("%02d:%02d.%02d", $duration/60, $duration%60, ($duratio
 ```
 
 ---
-## 23. Hybrid Resource Orchestration (하이브리드 자원 오케스트레이션)
+## 22. Hybrid Resource Orchestration (하이브리드 자원 오케스트레이션)
 
 ### 💡 개요
 내장 스토리지와 외장 SD 카드의 자원을 구분 없이 통합 관리하고, 두 경로의 차임벨(Chime)을 자유롭게 믹싱할 수 있는 가상 경로 시스템을 설계했습니다.
@@ -605,7 +605,7 @@ if (strpos($chime_name, "(ex) ") !== false) {
 ```
 
 ---
-## 24. Fault-Tolerant Media Transcoding Pipeline (결함 허용 미디어 트랜스코딩 파이프라인)
+## 23. Fault-Tolerant Media Transcoding Pipeline (결함 허용 미디어 트랜스코딩 파이프라인)
 
 ### 💡 개요
 이기종 오디오 플레이어 간의 호환성을 보장하기 위해, 업로드된 다양한 형식의 음원을 시스템 표준 규격(44.1kHz, Mono, S16LE PCM)으로 자동 변환하는 안정적인 데이터 파이프라인을 구축했습니다.
@@ -625,7 +625,7 @@ shell_exec("sudo rm -rf /home/interm/TTS_*.wav && sync");
 ```
 
 ---
-## 25. Pattern-Based Artifact Cleanup (패턴 기반 아티팩트 자동 정리 엔진)
+## 24. Pattern-Based Artifact Cleanup (패턴 기반 아티팩트 자동 정리 엔진)
 
 ### 💡 개요
 대량의 TTS 음원 생성 및 삭제 과정에서 발생하는 파생 캐시 파일(`.pcm`)들을 정밀하게 식별하여 시스템 자원을 효율적으로 관리하는 정리 엔진을 구현했습니다.
@@ -645,7 +645,7 @@ array_map('unlink', glob($safe_pattern)); // 관련 아티팩트 전수 삭제
 ```
 
 ---
-## 26. Stateless Playback Resume Logic (상태 비보존형 재생 복구 로직)
+## 25. Stateless Playback Resume Logic (상태 비보존형 재생 복구 로직)
 
 ### 💡 개요
 시스템 리부팅이나 네트워크 재연결 시에도 이전의 재생 시퀀스를 안전하게 복구하기 위해, JSON 파일 기반의 글로벌 재생 정보를 활용한 자동 복구 시스템을 구현했습니다.
@@ -667,7 +667,7 @@ break;
 ```
 
 ---
-## 27. Universal API Payload Negotiator (범용 API 페이로드 협상가)
+## 26. Universal API Payload Negotiator (범용 API 페이로드 협상가)
 
 ### 💡 개요
 기존의 JSON 전용 API 구조를 확장하여, 일반 데이터와 대용량 바이너리 파일(Multipart)을 동시에 수용할 수 있는 유연한 요청 처리 레이어를 구축했습니다.
@@ -694,7 +694,7 @@ public function post($_path, $_func, $_type = "POST") {
 ```
 
 ---
-## 28. Multi-Model UI State Synchronization (멀티 모델 UI 상태 동기화)
+## 27. Multi-Model UI State Synchronization (멀티 모델 UI 상태 동기화)
 
 ### 💡 개요
 단일 채널 스피커부터 멀티 채널 컨트롤러까지, 서로 다른 모델 간의 UI 일관성을 보장하기 위해 세션 기반의 상태 공유 아키텍처를 구현했습니다.
@@ -713,7 +713,7 @@ echo "<script>var state = {$zone_lock};</script>";
 ```
 
 ---
-## 29. Unified REST API Authentication Middleware (통합 REST API 인증 미들웨어)
+## 28. Unified REST API Authentication Middleware (통합 REST API 인증 미들웨어)
 
 ### 💡 개요
 수천 개의 API 요청을 처리할 때 발생할 수 있는 보안 취약점을 해결하기 위해, 모든 엔드포인트에 공통으로 적용되는 중앙 집중형 인증 미들웨어를 구축했습니다.
@@ -734,7 +734,7 @@ $project_name = $comm_func_handler->getEnvProjectName();
 ```
 
 ---
-## 30. Adaptive Template Architecture (적응형 템플릿 아키텍처)
+## 29. Adaptive Template Architecture (적응형 템플릿 아키텍처)
 
 ### 💡 개요
 비즈니스 로직과 UI 스타일을 엄격히 분리하고, 장치 설정에 따라 HTML 구조를 동적으로 재구성하는 유연한 템플릿 엔진을 설계했습니다.
@@ -757,7 +757,7 @@ $project_name = $comm_func_handler->getEnvProjectName();
 ```
 
 ---
-## 31. Debugging & Code Maintenance (디버깅 코드 최적화 및 유지보수)
+## 30. Debugging & Code Maintenance (디버깅 코드 최적화 및 유지보수)
 
 ### 💡 개요
 개발 중 포함된 불필요한 PHP 디버깅 출력 코드와 오타를 정리하여 운영
@@ -776,7 +776,7 @@ $project_name = $comm_func_handler->getEnvProjectName();
 ```
 
 ---
-## 32. Back-end Logic Optimization & Security (서버 로직 최적화 및 보안)
+## 31. Back-end Logic Optimization & Security (서버 로직 최적화 및 보안)
 
 ### 💡 개요
 운영 환경에서의 데이터 일관성과 보안성을 강화하기 위해 서버측 제어 로직을 최적화하고, 불필요한 디버깅 코드를 완벽히 제거했습니다.
@@ -797,7 +797,7 @@ function EscapeHtml(text) {
 ```
 
 ---
-## 33. System Reliability & Resource Management (시스템 안정성 및 리소스 제어)
+## 32. System Reliability & Resource Management (시스템 안정성 및 리소스 제어)
 
 ### 💡 개요
 임베디드 장치의 시스템 점검 주기 설정 로직을 완성하고, 그룹 관리 및 음원 자원의 안전한 삭제를 위한 백엔드 프로세스를 고도화했습니다.
@@ -818,7 +818,7 @@ function execute_core_process() {
 ```
 
 ---
-## 34. Cross-Module Communication & Compatibility (모듈 간 통신 및 모델별 호환성 처리)
+## 33. Cross-Module Communication & Compatibility (모듈 간 통신 및 모델별 호환성 처리)
 
 ### 💡 개요
 컨트롤러와 TTS 관리 팝업 간의 파라미터 전달 방식을 최적화하고, 기기별(한화향/인터엠향) 기능 차이에 따른 동작 분기 로직을 강화했습니다.
@@ -838,7 +838,7 @@ if(alive_info === 0 && DEF_DEVICE_COMPANY.toLocaleLowerCase() !== "hanwha"){
 ```
 
 ---
-## 35. Advanced IPC & State Persistence (고급 프로세스 간 통신 및 상태 영속화)
+## 34. Advanced IPC & State Persistence (고급 프로세스 간 통신 및 상태 영속화)
 
 ### 💡 개요
 모듈 간 통신 방식을 표준화하고, 시스템 점검 설정과 같은 중요 환경 변수의 모델별 분기 처리를 통해 서버측 리소스 제어 안정성을 극대화했습니다.
@@ -860,7 +860,7 @@ if($company === "Inter-M"){
 ```
 
 ---
-## 36. Server-Side TTS Resource Lifecycle Management (TTS 자원 생명주기 관리 및 정합성)
+## 35. Server-Side TTS Resource Lifecycle Management (TTS 자원 생명주기 관리 및 정합성)
 
 ### 💡 개요
 TTS 생성부터 방송 종료에 이르는 음원 자원의 전체 생명주기를 관리하는 백엔드 프로세스를 강화하여, 시스템 무결성을 확보했습니다.
@@ -881,7 +881,7 @@ if(json_tts_info["temp_tobgm_tts_name"] !== null){
 ```
 
 ---
-## 37. NAT Security & Multi-Language Operational Infrastructure (NAT 보안 및 현지화 운영 인프라)
+## 36. NAT Security & Multi-Language Operational Infrastructure (NAT 보안 및 현지화 운영 인프라)
 
 ### 💡 개요
 NAT 설정 정보의 보안 암호화 저장 체계를 구축하고, 관리자 운영 이벤트 로깅 인프라를 확장하여 SIP 환경에서의 운영 안정성과 투명성을 극대화했습니다.
@@ -941,7 +941,7 @@ case "reset_tts_play_info" :
 ```
 
 ---
-## 38. Hanwha-Model Mic Control & Migration Reliability (한화 모델향 마이크 제어 및 마이그레이션 안정성)
+## 37. Hanwha-Model Mic Control & Migration Reliability (한화 모델향 마이크 제어 및 마이그레이션 안정성)
 
 ### 💡 개요
 한화향 모델의 마이크 설정(MIC Delay) 값을 관리하고, 시스템 초기화 및 업그레이드 상황에서도 사용자 설정이 유실되지 않도록 보존하는 마이그레이션 엔진을 강화했습니다.
@@ -961,7 +961,7 @@ file_put_contents(CONF_DSP_PATH, json_encode($dsp_info, ...), LOCK_EX);
 ```
 
 ---
-## 39. Backend Broadcasting & Model Compatibility (방송 제어 및 모델 호환성 강화)
+## 38. Backend Broadcasting & Model Compatibility (방송 제어 및 모델 호환성 강화)
 
 ### 💡 개요
 컨트롤러 상에서 BGM/TTS 소스 장치를 통합 관리하고, 기기별/상태별로 방송 프로세스를 정교하게 분기하여 방송 서비스의 신뢰성을 확보했습니다.
@@ -981,7 +981,7 @@ function execute_core_process() {
 ```
 
 ---
-## 40. Media Control Protocol Standardization (미디어 제어 프로토콜 표준화)
+## 39. Media Control Protocol Standardization (미디어 제어 프로토콜 표준화)
 
 ### 💡 개요
 음원 재생 볼륨 및 DSP 입출력 제어를 담당하는 `media.cgi` 로직을 `Media` 클래스로 객체화하고, 장치별/타입별 통신 규약을 표준화하여 시스템 운영 신뢰성을 확보했습니다.
@@ -1001,7 +1001,7 @@ function execute_core_process() {
 ```
 
 ---
-## 41. Icon Data Integrity & Migration Resilience (아이콘 데이터 정합성 및 마이그레이션 회복력)
+## 40. Icon Data Integrity & Migration Resilience (아이콘 데이터 정합성 및 마이그레이션 회복력)
 
 ### 💡 개요
 시스템 내 리소스(아이콘) 등록 시 데이터베이스 정합성을 보장하고, 마이그레이션 진행 중 발생할 수 있는 중복 키 삽입 오류 및 비정상 종료 시 시스템 복구 로직을 강화했습니다.
@@ -1022,7 +1022,7 @@ if($param_count[0] == 0){
 ```
 
 ---
-## 43. System Structural Standardization & Dependency Management (시스템 구조 표준화 및 의존성 관리)
+## 41. System Structural Standardization & Dependency Management (시스템 구조 표준화 및 의존성 관리)
 
 ### 💡 개요
 시스템의 메인 웹 페이지(`index.php`) 및 연관 PHP 스크립트의 구조를 정규화하고, 시스템 리소스 의존성을 관리하는 방식을 표준화하여 페이지 렌더링 및 모듈 실행의 안정성을 확보했습니다.
@@ -1039,7 +1039,7 @@ include_once "common_script.php";
 ```
 
 ---
-## 45. Security & Data Integrity Infrastructure (보안 및 데이터 정합성 인프라)
+## 42. Security & Data Integrity Infrastructure (보안 및 데이터 정합성 인프라)
 
 ### 💡 개요
 사용자 입력 값의 보안 검증(HTML 태그 주입 방지) 체계를 강화하고, 데이터 저장 및 조회 과정에서의 인코딩 정합성을 완벽하게 제어하여 시스템 무결성을 보존하는 인프라를 구축했습니다.
@@ -1059,7 +1059,7 @@ function secure_data_load($data) {
 ```
 
 ---
-## 46. System Resilience & Multi-Brand Resource Orchestration (시스템 회복력 및 멀티 브랜드 자원 관리)
+## 43. System Resilience & Multi-Brand Resource Orchestration (시스템 회복력 및 멀티 브랜드 자원 관리)
 
 ### 💡 개요
 하드웨어 브랜드별(Inter-M, Hanwha) 정책을 시스템 핵심 엔진에 통합하고, 리소스 생명주기 및 마이그레이션의 원자성을 확보하여 서비스의 고가용성을 실현했습니다.
@@ -1080,7 +1080,7 @@ function execute_core_process() {
 ```
 
 ---
-## 47. Optimized Transactional Engine & Secure Resource Lifecycle (최적화된 트랜잭션 엔진 및 보안 자원 관리)
+## 44. Optimized Transactional Engine & Secure Resource Lifecycle (최적화된 트랜잭션 엔진 및 보안 자원 관리)
 
 ### 💡 개요
 AI 이벤트 프리셋 관리를 위한 고성능 백엔드 엔진을 구축하고, 대규모 데이터 처리 시 발생하는 DB 부하를 최소화하는 트랜잭션 최적화 및 보안 리소스 처리 로직을 구현했습니다.
@@ -1102,7 +1102,7 @@ $safe_data = sanitize_input($_POST['user_input']);
 ```
 
 ---
-## Full-Stack Code Showcase: High-Performance Backend AI Engine (AI 백엔드 엔진 전수 코드화 및 성능 최적화)
+## 45. Full-Stack Code Showcase: High-Performance Backend AI Engine (AI 백엔드 엔진 전수 코드화 및 성능 최적화)
 
 ### 💡 개요
 본 섹션은 IP-1015BX AI 이벤트 프리셋 시스템을 구동하는 **전체 백엔드 핵심 소스 코드**를 포함합니다. 데이터베이스 무결성을 보장하는 지능형 PDO 재시도 로직, 대규모 데이터 세트 처리를 위한 벌크 트랜잭션 최적화, 그리고 시스템 기밀성 유지를 위한 보안 스트리밍 아키텍처를 생략 없이 상세히 기술합니다.
