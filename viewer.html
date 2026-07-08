@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Viewer | Wanjin Kim</title>
+
+<!-- marked.js: Markdown parser -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- highlight.js: Syntax highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<style>
+  /* ─── Reset & Base ─────────────────────────── */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg:        #0d1117;
+    --surface:   #161b22;
+    --border:    #30363d;
+    --text:      #e6edf3;
+    --muted:     #8b949e;
+    --accent:    #58a6ff;
+    --green:     #238636;
+    --code-bg:   #1e2634;
+    --inline-bg: #2d333b;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ─── Top Nav ───────────────────────────────── */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,17,23,.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  .topbar-left svg { opacity: .7; flex-shrink: 0; }
+  .topbar-left:hover { color: var(--accent); }
+  .topbar-left:hover svg { opacity: 1; }
+
+  .breadcrumb {
+    color: var(--muted);
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .breadcrumb span { color: var(--accent); }
+
+  /* ─── Layout ────────────────────────────────── */
+  .page-wrap {
+    display: flex;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+    gap: 32px;
+  }
+
+  /* ─── TOC Sidebar ───────────────────────────── */
+  .toc-sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    padding-top: 40px;
+  }
+
+  .toc-box {
+    position: sticky;
+    top: 72px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+
+  .toc-box::-webkit-scrollbar { width: 4px; }
+  .toc-box::-webkit-scrollbar-track { background: transparent; }
+  .toc-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .toc-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  #toc-list {
+    list-style: none;
+  }
+
+  #toc-list li { margin: 0; }
+
+  #toc-list a {
+    display: block;
+    padding: 5px 8px;
+    border-radius: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.45;
+    transition: all .15s;
+    border-left: 2px solid transparent;
+  }
+
+  #toc-list a:hover,
+  #toc-list a.active {
+    color: var(--accent);
+    background: rgba(88,166,255,.08);
+    border-left-color: var(--accent);
+  }
+
+  #toc-list li.toc-h3 a { padding-left: 20px; font-size: 12px; }
+  #toc-list li.toc-h4 a { padding-left: 32px; font-size: 11px; }
+
+  /* ─── Article ───────────────────────────────── */
+  article {
+    flex: 1;
+    min-width: 0;
+    padding-top: 40px;
+  }
+
+  /* ─── Loading ───────────────────────────────── */
+  #loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 120px 0;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .spinner {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ─── Markdown Styles ───────────────────────── */
+  #content { display: none; }
+
+  #content h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+    color: var(--text);
+  }
+
+  #content h2 {
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 56px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    scroll-margin-top: 72px;
+  }
+
+  #content h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e6edf3;
+    margin: 28px 0 10px;
+    scroll-margin-top: 72px;
+  }
+
+  #content h4 {
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin: 20px 0 8px;
+    scroll-margin-top: 72px;
+  }
+
+  #content p {
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  #content ul, #content ol {
+    padding-left: 22px;
+    margin-bottom: 14px;
+  }
+
+  #content li {
+    color: var(--muted);
+    margin-bottom: 6px;
+    line-height: 1.65;
+  }
+
+  #content li strong { color: var(--text); }
+
+  #content strong { color: var(--text); }
+
+  #content a { color: var(--accent); text-decoration: none; }
+  #content a:hover { text-decoration: underline; }
+
+  #content hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+  }
+
+  /* Inline code */
+  #content :not(pre) > code {
+    background: var(--inline-bg);
+    color: #e06c75;
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: .88em;
+    font-family: 'Consolas', 'Fira Code', monospace;
+    border: 1px solid var(--border);
+  }
+
+  /* Code blocks */
+  #content pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 20px 0;
+    position: relative;
+  }
+
+  #content pre code {
+    display: block;
+    padding: 20px 22px;
+    font-size: 13.5px;
+    font-family: 'Consolas', 'Fira Code', 'Cascadia Code', monospace;
+    line-height: 1.7;
+    background: transparent !important;
+    color: #c9d1d9;
+  }
+
+  /* Copy button on code blocks */
+  .code-wrap { position: relative; }
+
+  .copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: var(--border);
+    color: var(--muted);
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .2s;
+    opacity: 0;
+  }
+
+  .code-wrap:hover .copy-btn { opacity: 1; }
+  .copy-btn:hover { background: var(--accent); color: #fff; }
+  .copy-btn.copied { background: var(--green); color: #fff; opacity: 1; }
+
+  /* Language badge */
+  .lang-badge {
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: monospace;
+    letter-spacing: .05em;
+  }
+
+  /* Section cards — wrap each h2 block */
+  .md-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    transition: border-color .2s;
+  }
+
+  .md-section:hover { border-color: #444d56; }
+
+  /* Blockquote */
+  #content blockquote {
+    border-left: 4px solid var(--accent);
+    padding: 10px 18px;
+    margin: 20px 0;
+    color: var(--muted);
+    background: rgba(88,166,255,.05);
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Table */
+  #content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+
+  #content th, #content td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+
+  #content th {
+    background: var(--code-bg);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  #content td { color: var(--muted); }
+  #content tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+  /* Back to top btn */
+  #back-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: all .25s;
+    font-size: 18px;
+  }
+
+  #back-top.visible { opacity: 1; }
+  #back-top:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ─── Responsive ────────────────────────────── */
+  @media (max-width: 900px) {
+    .toc-sidebar { display: none; }
+    .page-wrap { padding: 0 16px 60px; }
+  }
+
+  @media (max-width: 600px) {
+    #content h1 { font-size: 1.5rem; }
+    #content h2 { font-size: 1.2rem; }
+    .md-section { padding: 20px 18px; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ─── Top Navigation ─────────────────── -->
+<nav class="topbar">
+  <a href="index.html" class="topbar-left">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+    Wanjin Kim
+  </a>
+  <div class="breadcrumb">Portfolio / <span id="page-title">Loading…</span></div>
+</nav>
+
+<!-- ─── Main Layout ────────────────────── -->
+<div class="page-wrap">
+
+  <!-- TOC Sidebar -->
+  <aside class="toc-sidebar">
+    <div class="toc-box">
+      <div class="toc-label">On this page</div>
+      <ul id="toc-list"></ul>
+    </div>
+  </aside>
+
+  <!-- Article -->
+  <article>
+    <div id="loading">
+      <div class="spinner"></div>
+      <span>Loading…</span>
+    </div>
+    <div id="content"></div>
+  </article>
+
+</div>
+
+<!-- Back-to-top -->
+<button id="back-top" title="맨 위로">↑</button>
+
+<script>
+// ─── Marked.js config ──────────────────────────────
+marked.setOptions({
+  gfm: true,
+  breaks: true,
+  highlight: (code, lang) => {
+    if (lang && hljs.getLanguage(lang)) {
+      return hljs.highlight(code, { language: lang }).value;
+    }
+    return hljs.highlightAuto(code).value;
+  }
+});
+
+// ─── Get file from query param ─────────────────────
+const params = new URLSearchParams(location.search);
+const mdFile = params.get('file') || '';
+
+if (!mdFile) {
+  document.getElementById('loading').innerHTML = '<span style="color:#f85149">파일이 지정되지 않았습니다.<br>?file=filename.md 를 추가해 주세요.</span>';
+} else {
+  fetch(mdFile)
+    .then(r => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.text();
+    })
+    .then(md => render(md))
+    .catch(err => {
+      document.getElementById('loading').innerHTML = `<span style="color:#f85149">파일을 불러올 수 없습니다: ${err.message}</span>`;
+    });
+}
+
+// ─── Render markdown ───────────────────────────────
+function render(md) {
+  const html = marked.parse(md);
+
+  const content = document.getElementById('content');
+  const loading = document.getElementById('loading');
+
+  // Wrap h2 sections in cards
+  const wrapped = wrapSections(html);
+  content.innerHTML = wrapped;
+
+  // Set page title
+  const firstH1 = content.querySelector('h1');
+  const docTitle = firstH1 ? firstH1.textContent : mdFile;
+  document.getElementById('page-title').textContent = docTitle;
+  document.title = `${docTitle} | Wanjin Kim`;
+
+  // Syntax highlight any code that marked didn't catch
+  content.querySelectorAll('pre code').forEach(el => {
+    if (!el.dataset.highlighted) hljs.highlightElement(el);
+  });
+
+  // Add copy buttons + lang badge to code blocks
+  content.querySelectorAll('pre').forEach(pre => {
+    const codeEl = pre.querySelector('code');
+    if (!codeEl) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'code-wrap';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+
+    // Detect language
+    const cls = Array.from(codeEl.classList).find(c => c.startsWith('language-'));
+    const lang = cls ? cls.replace('language-', '') : '';
+
+    if (lang) {
+      const badge = document.createElement('div');
+      badge.className = 'lang-badge';
+      badge.textContent = lang;
+      wrap.appendChild(badge);
+    }
+
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = 'Copy';
+    btn.addEventListener('click', () => {
+      navigator.clipboard.writeText(codeEl.innerText).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+      });
+    });
+    wrap.appendChild(btn);
+  });
+
+  // Build TOC
+  buildTOC(content);
+
+  // Show
+  loading.style.display = 'none';
+  content.style.display = 'block';
+}
+
+// ─── Wrap each h2 block in a .md-section card ─────
+function wrapSections(html) {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+
+  const nodes = Array.from(div.childNodes);
+  const result = document.createDocumentFragment();
+  let currentSection = null;
+
+  nodes.forEach(node => {
+    const tag = node.nodeName.toLowerCase();
+
+    if (tag === 'h1') {
+      // h1 sits outside any card
+      if (currentSection) { result.appendChild(currentSection); currentSection = null; }
+      result.appendChild(node.cloneNode(true));
+    } else if (tag === 'h2') {
+      if (currentSection) result.appendChild(currentSection);
+      currentSection = document.createElement('div');
+      currentSection.className = 'md-section';
+      currentSection.appendChild(node.cloneNode(true));
+    } else if (tag === 'hr') {
+      // hr is the separator — close current card
+      if (currentSection) { result.appendChild(currentSection); currentSection = null; }
+    } else {
+      if (currentSection) {
+        currentSection.appendChild(node.cloneNode(true));
+      } else {
+        result.appendChild(node.cloneNode(true));
+      }
+    }
+  });
+
+  if (currentSection) result.appendChild(currentSection);
+
+  const wrapper = document.createElement('div');
+  wrapper.appendChild(result);
+  return wrapper.innerHTML;
+}
+
+// ─── Build sidebar TOC ─────────────────────────────
+function buildTOC(content) {
+  const headings = content.querySelectorAll('h1, h2, h3');
+  const tocList = document.getElementById('toc-list');
+  tocList.innerHTML = '';
+  let idCount = {};
+
+  headings.forEach(h => {
+    const tag = h.tagName.toLowerCase();
+    const text = h.textContent.trim();
+
+    // Generate unique id
+    let baseId = text.toLowerCase().replace(/[^a-z0-9가-힣]+/g, '-').replace(/^-+|-+$/g, '');
+    idCount[baseId] = (idCount[baseId] || 0) + 1;
+    const id = idCount[baseId] > 1 ? `${baseId}-${idCount[baseId]}` : baseId;
+    h.id = id;
+
+    const li = document.createElement('li');
+    li.className = `toc-${tag}`;
+    const a = document.createElement('a');
+    a.href = '#' + id;
+    a.textContent = text.length > 42 ? text.slice(0, 42) + '…' : text;
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Highlight active TOC item on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+        const activeLink = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -85% 0px' });
+
+  headings.forEach(h => { if (h.id) observer.observe(h); });
+}
+
+// ─── Back-to-top ───────────────────────────────────
+const backTop = document.getElementById('back-top');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('visible', window.scrollY > 400);
+});
+backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+
+</body>
+</html>
