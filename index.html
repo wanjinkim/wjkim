@@ -74,23 +74,72 @@ h1 {
   gap: 8px;
 }
 
-.tech span {
+.skill-groups {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.skill-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.skill-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  width: 104px;
+  flex-shrink: 0;
+  padding-top: 8px;
+  border-right: 2px solid var(--border);
+  padding-right: 14px;
+}
+
+.skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 15px;
+  gap: 5px;
+  padding: 6px 13px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 20px;
-  font-size: 13.5px;
+  font-size: 13px;
   color: var(--muted);
-  transition: border-color .2s, color .2s;
+  transition: border-color .2s, color .2s, background .2s;
+  cursor: default;
 }
 
-.tech span:hover {
+.chip:hover {
   border-color: var(--accent);
   color: var(--accent);
+  background: rgba(88,166,255,.06);
 }
+
+.chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-fe  { background: #58a6ff; }
+.dot-be  { background: #3fb950; }
+.dot-db  { background: #f78166; }
+.dot-net { background: #e3b341; }
+.dot-dev { background: #d2a8ff; }
+.dot-inf { background: #79c0ff; }
 
 /* ─── Section title ─── */
 .section-header {
@@ -202,14 +251,80 @@ footer {
     <div class="avatar">WK</div>
     <h1>Wanjin Kim</h1>
     <div class="sub">Web Application Developer · PHP / JavaScript / Linux</div>
-    <div class="tech">
-      <span>🖥️ Frontend</span>
-      <span>⚙️ Backend</span>
-      <span>🔌 REST API</span>
-      <span>🐘 PHP</span>
-      <span>🟨 JavaScript</span>
-      <span>🗄️ SQLite</span>
-      <span>🐧 Linux</span>
+    <div class="skill-groups">
+
+      <div class="skill-row">
+        <div class="skill-label">Frontend</div>
+        <div class="skill-chips">
+          <span class="chip"><span class="chip-dot dot-fe"></span>HTML / CSS</span>
+          <span class="chip"><span class="chip-dot dot-fe"></span>jQuery</span>
+          <span class="chip"><span class="chip-dot dot-fe"></span>Vanilla JavaScript</span>
+        </div>
+      </div>
+
+      <div class="skill-row">
+        <div class="skill-label">Backend</div>
+        <div class="skill-chips">
+          <span class="chip"><span class="chip-dot dot-be"></span>PHP</span>
+          <span class="chip"><span class="chip-dot dot-be"></span>Shell Script</span>
+        </div>
+      </div>
+
+      <div class="skill-row">
+        <div class="skill-label">Database</div>
+        <div class="skill-chips">
+          <span class="chip"><span class="chip-dot dot-db"></span>MySQL</span>
+          <span class="chip"><span class="chip-dot dot-db"></span>SQLite</span>
+        </div>
+      </div>
+
+      <div class="skill-row">
+        <div class="skill-label">Network</div>
+        <div class="skill-chips">
+          <span class="chip"><span class="chip-dot dot-net"></span>HTTP / HTTPS</span>
+          <span class="chip"><span class="chip-dot dot-net"></span>TCP / IP</span>
+          <span class="chip"><span class="chip-dot dot-net"></span>UDP</span>
+          <span class="chip"><span class="chip-dot dot-net"></span>HAProxy</span>
+        </div>
+      </div>
+
+      <div class="skill-row">
+        <div class="skill-label">DevTools</div>
+        <div class="skill-chips">
+          <span class="chip"><span class="chip-dot dot-dev"></span>Postman</span>
+          <span class="chip"><span class="chip-dot dot-dev"></span>SVN</span>
+          <span class="chip"><span class="chip-dot dot-dev"></span>JIRA</span>
+          <span class="chip"><span class="chip-dot dot-net"></span>WireShark</span>
+          <span class="chip"><span class="chip-dot dot-net"></span>Vscode</span>
+          <span class="chip"><span class="chip-dot dot-net"></span>Cursor</span>
+        </div>
+      </div>
+
+      <div class="skill-row">
+        <div class="skill-label">AI Model</div>
+        <div class="skill-chips">
+          <span class="chip"><span class="chip-dot dot-dev"></span>Claude Sonnet 4.6</span>
+          <span class="chip"><span class="chip-dot dot-dev"></span>Gemini Pro 3.1</span>
+          <span class="chip"><span class="chip-dot dot-net"></span>GPT-5.5</span>
+        </div>
+      </div>   
+
+      <div class="skill-row">
+        <div class="skill-label">AI Agents</div>
+        <div class="skill-chips">
+          <span class="chip"><span class="chip-dot dot-dev"></span>Claude Code</span>
+          <span class="chip"><span class="chip-dot dot-dev"></span>Antigravity</span>
+          <span class="chip"><span class="chip-dot dot-net"></span>Codex/span>
+        </div>
+      </div>            
+
+      <div class="skill-row">
+        <div class="skill-label">Infra</div>
+        <div class="skill-chips">
+          <span class="chip"><span class="chip-dot dot-inf"></span>Linux</span>
+        </div>
+      </div>
+
     </div>
   </header>
 
