@@ -91,9 +91,9 @@ class ExtensionLoader {
 ```php
 <?php
 if( $_POST['type'] == "log" ) {
-    if($_POST['act'] == "write") { /* ... */ }
+    if($_POST['act'] == "write") { /* DB에 로그 기록 및 파일 저장 로직 혼재... */ }
 } else if( $_POST['type'] == "login" ) {
-    /* ... */
+    /* 세션 처리 및 권한 검사 혼재... */
 }
 // 하단에서 controller와 fault를 무조건 include
 include_once "common_process_controller.php";
@@ -113,8 +113,16 @@ class AjaxRequestHandler {
     ];
 
     public function handle(string $type, string $action, array $data): void {
-        if (!isset($this->routes[$type])) throw new Exception("Route Not Found");
-        (new $this->routes[$type]())->execute($action, $data);
+        if (!isset($this->routes[$type])) {
+            throw new \Exception("Route Not Found for type: {$type}");
+        }
+        
+        $controller = new $this->routes[$type]();
+        if (!method_exists($controller, $action)) {
+            throw new \Exception("Action {$action} not found in {$type}");
+        }
+        
+        $controller->$action($data);
     }
 }
 ?>
@@ -298,19 +306,39 @@ class SecureFileUploader {
 **[Before]**
 ```javascript
 class CryptFunc {
-    // 암호화 파싱, 키 생성, UI 제어 모두 묶여있음
-    rsaes_oaep_encrypt(_rsaKey, _m) { /* ... */ }
+    // 암호화 파싱, 키 생성, UI 제어(DOM 요소 접근)가 모두 하나의 메서드에 묶여있음
+    rsaes_oaep_encrypt(_rsaKey, _m) {
+        // var public_key = $("#public_key").val(); 
+        // JSEncrypt 세팅 및 반환...
+    }
 }
 ```
 
 **[After]**
 ```javascript
 export class CryptoService {
-    static encryptRSA(publicKey, plainText) { /* 독립된 암호화 로직 */ }
+    /**
+     * 독립된 순수 암호화 로직 (UI 및 DOM 의존성 제거)
+     * @param {string} publicKey 
+     * @param {string} plainText 
+     * @returns {string} Encrypted text
+     */
+    static encryptRSA(publicKey, plainText) { 
+        if (!publicKey || !plainText) throw new Error("Invalid parameters");
+        
+        const encryptor = new JSEncrypt();
+        encryptor.setPublicKey(publicKey);
+        const encrypted = encryptor.encrypt(plainText);
+        
+        if (!encrypted) throw new Error("Encryption failed");
+        return encrypted;
+    }
 }
 
 import { CryptoService } from './CryptoService.js';
-// 로그인 매니저에서는 오로지 서비스만 호출하여 사용
+// LoginManager.js 에서는 DOM에서 값을 읽어 서비스에 전달만 수행
+const encryptedPw = CryptoService.encryptRSA(pubKey, rawPassword);
+
 ```
 
 ### 💡 기대 효과 및 결과
