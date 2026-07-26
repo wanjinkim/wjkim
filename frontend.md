@@ -12,7 +12,7 @@
 
 ### 🛠️ Implementation Example
 ```javascript
-// MutationObserver를 활용한 실시간 상태 감시 (kwj97 구현)
+// MutationObserver를 활용한 실시간 상태 감시 
 const broadcast_observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
         const isActive = !mutation.target.classList.contains('div_audio_server_deact');
@@ -40,7 +40,7 @@ broadcast_observer.observe(document.querySelector('.div_audio_server_status'), {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 비동기 작업 중복 실행 방지 토큰 로직 (kwj97 구현)
+// 비동기 작업 중복 실행 방지 토큰 로직 
 let tts_instant_token = null;
 
 document.addEventListener('click', (e) => {
@@ -74,7 +74,7 @@ document.addEventListener('click', (e) => {
 
 ### 🛠️ Implementation Example
 ```javascript
-/* 방송 상태 Blink 애니메이션 (kwj97 구현) */
+/* 방송 상태 Blink 애니메이션  */
 @keyframes blink-active {
   0%, 100% { opacity: 1; filter: drop-shadow(0 0 5px #f27322); }
   50% { opacity: 0.4; }
@@ -96,7 +96,7 @@ document.addEventListener('click', (e) => {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 자식 창(Iframe)에서의 서버 상태 변경 보고 (kwj97 구현)
+// 자식 창(Iframe)에서의 서버 상태 변경 보고 
 const server_status_reporter = new MutationObserver((mutations) => {
     mutations.forEach((m) => {
         if (m.attributeName === 'class' && m.target.classList.contains('div_audio_server_deact')) {
@@ -109,7 +109,7 @@ const server_status_reporter = new MutationObserver((mutations) => {
     });
 });
 
-// 부모 창(Controller)에서의 메시지 수신 및 대응 (kwj97 구현)
+// 부모 창(Controller)에서의 메시지 수신 및 대응 
 window.addEventListener('message', function(event) {
     if (event.data.SERVER_STATUS_CHANGE === true) {
         alert("방송 서버 상태가 변경되었습니다. 창을 다시 로드합니다.");
@@ -131,7 +131,7 @@ window.addEventListener('message', function(event) {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 바이너리 패킷 수신 및 파싱 로직 (kwj97 구현)
+// 바이너리 패킷 수신 및 파싱 로직 
 _onmessage() {
     this.sock_fd.onmessage = (msg) => {
         if (msg.data instanceof ArrayBuffer) {
@@ -447,7 +447,7 @@ function set_list_and_auto_play(_data) {
 
 ### 🛠️ Implementation Example
 ```javascript
-/* 중앙 정렬 제어 모달 컴포넌체 (kwj97 구현) */
+/* 중앙 정렬 제어 모달 컴포넌체  */
 .source_control {
     position      : absolute;
     background    : #2A2A2A;
@@ -517,7 +517,7 @@ document.addEventListener('click', (e) => {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 소스 제어창 동적 호출 및 리소스 검증 (kwj97 구현)
+// 소스 제어창 동적 호출 및 리소스 검증 
 document.getElementById('source_control_button')?.addEventListener('click', function() {
     if (this.disabled) return;
     this.disabled = true; // 중복 호출 방지
@@ -549,7 +549,7 @@ document.getElementById('source_control_button')?.addEventListener('click', func
 
 ### 🛠️ Implementation Example
 ```javascript
-// 시퀀스 체크를 통한 조건부 UI 동기화 (kwj97 구현)
+// 시퀀스 체크를 통한 조건부 UI 동기화 
 async function sync_zone_info() {
     let submitArgs = ncsFunc.makeArgs("type", "get_rtzone_seq");
     const response = await fetch("modules/button_setup_process.php", {
@@ -586,7 +586,7 @@ async function sync_zone_info() {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 실시간 레벨 미터 데이터 수신 및 UI 반영 (kwj97 구현)
+// 실시간 레벨 미터 데이터 수신 및 UI 반영 
 if (_data.prefix == "meter") {
     // 현재 선택된 존의 IP와 일치하는 데이터만 처리
     const zoneIpLink = document.querySelector("#zone_ip a");
@@ -606,29 +606,29 @@ if (_data.prefix == "meter") {
 ## 20. Device-Specific UI Logic Orchestration (장치별 특화 로직 오케스트레이션)
 
 ### 💡 개요
-일반 오디오 장비와 고성능 앰프(IPA-10), 협력사 장비(Hanwha) 등 서로 다른 동작 사양을 가진 하드웨어들을 단일 코드베이스에서 안정적으로 지원하기 위한 조건부 렌더링 엔진을 구축했습니다.
+일반 오디오 장비와 고성능 앰프(고성능 앰프), 협력사 장비(B사) 등 서로 다른 동작 사양을 가진 하드웨어들을 단일 코드베이스에서 안정적으로 지원하기 위한 조건부 렌더링 엔진을 구축했습니다.
 
 ### 🚀 핵심 성과
 - **브랜드별 UI 가변성**: `DEF_DEVICE_COMPANY` 설정을 기반으로 아이콘 표시 방식(Backgroud Image vs Icon Invert)을 동적으로 전환.
-- **장치별 상태 전파 예외 처리**: IPA-10 모델의 특수한 오디오 경로(Amp Zone All) 제어 시퀀스를 별도 함수(`IsdRecvData_ipa10`)로 분리하여 코드 가독성 및 유지보수성 향상.
+- **장치별 상태 전파 예외 처리**: 고성능 앰프 모델의 특수한 오디오 경로(Amp Zone All) 제어 시퀀스를 별도 함수(`IsdRecvData_ipa10`)로 분리하여 코드 가독성 및 유지보수성 향상.
 
 ### 🛠️ Implementation Example
 ```javascript
-// 장치별 특화 상태 업데이트 로직 (kwj97 구현)
+// 장치별 특화 상태 업데이트 로직 
 function setZoneStatus(_ipca_stat) {
     Object.entries(_ipca_stat).forEach(([zone, source]) => {
         const targets = document.querySelectorAll("div[id^=button_" + zone + "_]");
 
         if (source === undefined) {
             // 한화 모델과 일반 모델의 아이콘 초기화 로직 분기
-            const selector = (DEF_DEVICE_COMPANY === "hanwha") ? ".zone_item_top" : ".zone_item_icon";
+            const selector = (DEF_DEVICE_COMPANY === "company_b") ? ".zone_item_top" : ".zone_item_icon";
             targets.forEach(target => {
                 const el = target.querySelector(selector);
                 if (el) el.style.backgroundImage = "";
             });
         } else {
-            // 고성능 장비(IPA-10)의 경우 소스-존 매핑 가상화 처리
-            if (DEF_DEVICE_NAME === "IPA-10") {
+            // 고성능 장비(고성능 앰프)의 경우 소스-존 매핑 가상화 처리
+            if (DEF_DEVICE_NAME === "고성능 앰프") {
                 sourceInfo_ipa10(source, source_type);
             }
         }
@@ -649,7 +649,7 @@ function setZoneStatus(_ipca_stat) {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 스크롤 및 휠 대응 드래그 선택 로직 (kwj97 구현)
+// 스크롤 및 휠 대응 드래그 선택 로직 
 document.addEventListener('wheel', (event) => {
     isWheeling = true;
     let delta = event.deltaY;
@@ -682,7 +682,7 @@ document.addEventListener('wheel', (event) => {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 배경색 밝기에 따른 아이콘 필터 자동 결정 (kwj97 구현)
+// 배경색 밝기에 따른 아이콘 필터 자동 결정 
 function determine_broadcast_color(zone_color) {
     const rgb = zone_color.match(/\d+/g);
     const brightness = 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2];
@@ -703,7 +703,7 @@ function determine_broadcast_color(zone_color) {
 
 ### 🛠️ Implementation Example
 ```javascript
-// Iframe으로부터의 메시지 수신 및 라우팅 (kwj97 구현)
+// Iframe으로부터의 메시지 수신 및 라우팅 
 window.addEventListener('message', function(event) {
     // 소스 IP 및 프로토콜 검증 (Cross-origin 보안)
     if (event.origin !== expected_source_url) return;
@@ -745,7 +745,7 @@ function execute_core_process() {
 
 ### 🛠️ Implementation Example
 ```javascript
-// Blob을 활용한 안전한 파일 다운로드 (kwj97 구현)
+// Blob을 활용한 안전한 파일 다운로드 
 fetch(process_url, {
     method: "POST",
     body: args
@@ -770,7 +770,7 @@ fetch(process_url, {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 다단계 파일 검증 및 자소 분리 보정 (kwj97 구현)
+// 다단계 파일 검증 및 자소 분리 보정 
 Array.from(upload_files).forEach((file, i) => {
     const name = file.name.normalize('NFC'); // 한글 정규화
     const special_reg = /[`*|\\\"\/?#%:<>&$+]/g;
@@ -793,7 +793,7 @@ Array.from(upload_files).forEach((file, i) => {
 
 ### 🛠️ Implementation Example
 ```javascript
-// TTS 언어 변경에 따른 성별 리스트 동적 갱신 (kwj97 구현)
+// TTS 언어 변경에 따른 성별 리스트 동적 갱신 
 document.addEventListener('change', (e) => {
     if (e.target.id === 'select_tts_language') {
         const lang = e.target.value;
@@ -827,7 +827,7 @@ document.addEventListener('change', (e) => {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 오디오 메타데이터 로드 시 재생 시간 계산 (kwj97 구현)
+// 오디오 메타데이터 로드 시 재생 시간 계산 
 audio_handler.onloadedmetadata = () => {
     const duration = audio_handler.duration;
     const min = pad(Math.floor(duration / 60), 2);
@@ -851,7 +851,7 @@ audio_handler.onloadedmetadata = () => {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 운영 환경의 프로토콜을 고려한 동적 URL 생성 (kwj97 구현)
+// 운영 환경의 프로토콜을 고려한 동적 URL 생성 
 const protocol = (location.protocol === 'https:') ? 'https' : 'http';
 const request_url = `${protocol}://${location.hostname}${location.port ? ':' + location.port : ''}`;
 ```
@@ -867,7 +867,7 @@ const request_url = `${protocol}://${location.hostname}${location.port ? ':' + l
 
 ### 🛠️ Implementation Example
 ```javascript
-// 설정 모드에 따른 컨트롤러 레이아웃 동적 조정 (kwj97 구현)
+// 설정 모드에 따른 컨트롤러 레이아웃 동적 조정 
 if (is_simple_setting) {
     document.querySelectorAll('.streaming_control_right').forEach(el => {
         el.style.alignSelf = 'center';
@@ -897,7 +897,7 @@ if (is_simple_setting) {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 특정 채널 타겟팅 자동 재생 로직 (kwj97 구현)
+// 특정 채널 타겟팅 자동 재생 로직 
 if (fileName === received_tts_name) {
     this.selected = true;
     let broadcast_info_json = {
@@ -928,13 +928,13 @@ if (fileName === received_tts_name) {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 프레임 로드 시 환경 데이터 주입 (kwj97 구현)
+// 프레임 로드 시 환경 데이터 주입 
 window.addEventListener('message', function(event) {
     if (typeof(event.data.location_origin) !== "undefined") {
         controller_url = event.data.location_origin;
         // 자식 프레임으로 현재 프로젝트 정보 역전송
         window.parent.postMessage({ 
-            PROJECT_NAME: "IPA-1000",
+            PROJECT_NAME: "고성능 앰프",
             SYNC_COMPLETE: true 
         }, controller_url);
     }
@@ -953,7 +953,7 @@ window.addEventListener('message', function(event) {
 
 ### 🛠️ Implementation Example
 ```javascript
-/* 프랑스어 전용 레이아웃 보정 로직 (kwj97 구현) */
+/* 프랑스어 전용 레이아웃 보정 로직  */
 body[class$='_Français'] .div_right_wrap .div_title {
     min-height: 44px; /* 텍스트 길이에 따른 최소 높이 확보 */
 }
@@ -980,7 +980,7 @@ body:not([class$='_Français']) .div_dialog_input_title {
 ### 🛠️ Implementation Example
 ```javascript
 css
- / 로그아웃 버튼 시인성 및 인터랙션 개선 (kwj97 구현) /
+ / 로그아웃 버튼 시인성 및 인터랙션 개선  /
  #img_banner_logout {
      background: #414141;
      opacity: 0.9; / 가독성 확보 /
@@ -1017,7 +1017,7 @@ $output_title = `<div class="output_list_row_title">
 ## 36. Robust Responsive Component Architecture (강력한 반응형 컴포넌트 구조)
 
 ### 💡 개요
-다양한 장치(Inter-M, Hanwha 등)와 화면 크기에 대응하기 위해, 하드코딩된 픽셀 기반 레이아웃을 탈피하고 유동적인 그리드 및 박스 모델 아키텍처를 구축했습니다.
+다양한 장치(A사, B사 등)와 화면 크기에 대응하기 위해, 하드코딩된 픽셀 기반 레이아웃을 탈피하고 유동적인 그리드 및 박스 모델 아키텍처를 구축했습니다.
 
 ### 🚀 핵심 성과
 - **가변형 테이블 레이아웃**: `min-width`와 `max-width`의 정밀한 조합을 통해, 텍스트가 긴 프랑스어나 러시아어 환경에서도 테이블 셀의 내용이 깨지지 않고 `break-word` 처리되도록 설계.
@@ -1025,7 +1025,7 @@ $output_title = `<div class="output_list_row_title">
 
 ### 🛠️ Implementation Example
 ```javascript
-/* 언어별 가변 타이틀 레이아웃 (kwj97 구현) */
+/* 언어별 가변 타이틀 레이아웃  */
 .div_contents_cell_title {
     width: 100px; /* 기본값 */
     overflow-wrap: break-word;
@@ -1068,7 +1068,7 @@ function execute_core_process() {
 
 ### 🛠️ Implementation Example
 ```javascript
-/* 다국어 대응 가변 버튼 스타일링 (kwj97 구현) */
+/* 다국어 대응 가변 버튼 스타일링  */
 .fc-today-button {
     min-width: 91px;
     width: auto; /* 텍스트 길이에 따라 자동 확장 */
@@ -1114,7 +1114,7 @@ function execute_core_process() {
 
 ### 🛠️ Implementation Example
 ```javascript
-/* 현대적인 유연한 컴포넌트 구조 (kwj97 구현) */
+/* 현대적인 유연한 컴포넌트 구조  */
 .div_contents_title {
     display: flex;
     justify-content: space-between;
@@ -1140,7 +1140,17 @@ function execute_core_process() {
 
 ### 🛠️ Implementation Example
 ```javascript
-
+// TTS 생성 음원 리스트 동기화 및 자동 재생 시퀀스
+if(broadcast_tts_id !== ""){
+    document.querySelectorAll('#select_tts option').forEach(opt => {
+        if(opt.value === broadcast_tts_id){
+            // 방송 대상 음원 선택 및 재생 이벤트 트리거
+            opt.selected = true;    
+            document.getElementById('tts_button_tts_play')?.click();
+            broadcast_tts_id = "";
+        }
+    });
+}
 ```
 
 ---
@@ -1161,26 +1171,11 @@ echo '<div class="system_check_msg">';
 echo '<br /> ' . Common\Lang\STR_SYSTEM_CHECK_END_MSG_2 . ' </div>';
 echo '</div>';
 
-/* 팝업창 위치를 브라우저 기준으로 고정하여 스크롤 문제 해결 (r5163) */
-.div_zone_delete_popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 // 스크롤 이슈 방지를 위한 고정 위치 툴팁 계산 로직 (r4147)
 document.querySelectorAll('.tooltip').forEach(el => {
     el.style.top = divTop + "px";
     el.style.left = divLeft + "px";
     el.style.position = "fixed"; // 화면 기준 고정 처리
-});
-
-// 다국어/해상도 대응을 위한 툴팁 위치 계산 엔진 (r4147)
-document.querySelectorAll('.tooltip').forEach(el => {
-    el.style.top = divTop + "px";
-    el.style.left = divLeft + "px";
-    el.style.position = "fixed"; // 스크롤 이슈 방지를 위한 고정 위치 처리
 });
 
 /* 팝업창 위치를 브라우저 기준으로 고정하여 스크롤 문제 해결 (r5163) */
@@ -1227,7 +1222,7 @@ document.getElementById('select_linein_mode')?.insertAdjacentHTML('afterend', `
 `);
 
 // 하드웨어 브랜드 정책에 따른 UI 제어 (r6140)
-if(company_name === "Hanwha"){
+if(company_name === "B사"){
     document.querySelectorAll('.mic_delay_selecbox, .talk_peak_selecbox, .span_mic_delay, .span_talk_peak').forEach(el => el.style.display = 'block');
 }
 
@@ -1263,14 +1258,31 @@ common_log_handler.info("[Output 볼륨 설정] Volume : "+value);
 
 ### 🛠️ Implementation Example
 ```javascript
+// window.opener 객체를 통해 부모-자식간 메모리 공유
+document.getElementById('control_button_make_tts')?.addEventListener('click', () => {
+    window.sourcetype = 'bgm'; // 부모창 객체에 소스 타입 할당
+    window.open('tts_make.php', 'ttsMake', `width=${popupwidth},height=${popupheight},left=${popupleft},top=${popuptop}`);
+});
 
+// 사용자 지정 이미지 지원
+if(DEF_DEVICE_COMPANY.toLocaleLowerCase() === "company_b"){
+    document.querySelectorAll("div[id^=button_" + zone + "_]").forEach(target => {
+        const topEl = target.querySelector(".zone_item_top");
+        if (topEl) topEl.style.backgroundImage = "url('/modules/source_add/html/data/" + source_img_path + "')";
+    });
+}else{
+    document.querySelectorAll("div[id^=button_" + zone + "_]").forEach(target => {
+        const iconEl = target.querySelector(".zone_item_icon");
+        if (iconEl) iconEl.style.backgroundImage = "url('/modules/source_add/html/data/" + source_img_path + "')";
+    });
+}
 ```
 
 ---
 ## 44. Modern Web Communication & Interactive AI Orchestration (현대적 웹 통신 및 인터랙티브 AI 오케스트레이션)
 
 ### 💡 개요
-IP-1015BX 기기의 AI 이벤트 프리셋 설정 모듈을 개발하며, 최신 웹 표준인 Fetch API를 도입하여 통신 구조를 현대화하고, 복잡한 이벤트 설정 과정을 직관적인 동적 UI로 구현했습니다.
+장비A 기기의 AI 이벤트 프리셋 설정 모듈을 개발하며, 최신 웹 표준인 Fetch API를 도입하여 통신 구조를 현대화하고, 복잡한 이벤트 설정 과정을 직관적인 동적 UI로 구현했습니다.
 
 ### 🚀 핵심 성과
 - **Fetch API 기반 통신 현대화**: 기존의 무거운 jQuery AJAX 대신 가볍고 강력한 `Fetch API(async/await)`를 전면 도입하여 클라이언트-서버 간 비동기 데이터 교환의 효율성을 증대시키고 코드 가독성을 확보(r.isd_ai).
@@ -1280,14 +1292,26 @@ IP-1015BX 기기의 AI 이벤트 프리셋 설정 모듈을 개발하며, 최신
 
 ### 🛠️ Implementation Example
 ```javascript
-
+/* 현대적 Fetch API 기반 동기 통신 모듈 */
+async function sync_fetch_post(_url, _action, _client_data = null) {
+    const payload = { ..._client_data, action: _action };
+    try {
+        const response = await fetch(_url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+        return await response.text();
+    } catch (err) { console.error('Communication Error:', err); return null; }
+}
 ```
 
 ---
 ## 45. Comprehensive UI Engine for AI Event Orchestration (AI 이벤트 오케스트레이션을 위한 종합 UI 엔진)
 
 ### 💡 개요
-IP-1015BX 기기의 AI 기반 음향 및 음성 이벤트 프리셋 관리 시스템을 구축하며, 동적 행 관리 엔진, 웹 표준 비동기 통신, 그리고 임베디드 환경에 최적화된 UX 레이어를 통합 설계했습니다.
+장비A 기기의 AI 기반 음향 및 음성 이벤트 프리셋 관리 시스템을 구축하며, 동적 행 관리 엔진, 웹 표준 비동기 통신, 그리고 임베디드 환경에 최적화된 UX 레이어를 통합 설계했습니다.
 
 ### 🚀 핵심 성과
 - **동적 행 관리 및 상태 머신**: 플러스/마이너스 버튼을 통한 무제한 프리셋 행 추가 기능을 구현하고, 각 행의 상태(insert_item, update_item)를 추적하여 변경된 데이터만 서버로 전송하는 효율적인 상태 관리 로직 구축(r8450, r8458).
@@ -1298,14 +1322,39 @@ IP-1015BX 기기의 AI 기반 음향 및 음성 이벤트 프리셋 관리 시�
 
 ### 🛠️ Implementation Example
 ```javascript
+/* 동적 행 생성 엔진 (Self-healing UI) */
+function make_insert_ai_event_list_div(type) {
+    return `<div class="ai_event_row_item ${type} insert_item">
+        <div class="div_grid_contents">
+            <div class="ai_event_button"><i class="xi-plus"></i><i class="xi-minus"></i></div>
+            <div class="ai_event_name"><input type="text" placeholder="이벤트명"></div>
+            <div class="ai_event_no"><input type="text" placeholder="번호"></div>
+            <div class="ai_event_source_select">
+                <div class="arrow_position_div">
+                    <input type="text" readonly placeholder="음원 선택"><i class="xi-angle-down-min"></i>
+                    <input type='hidden' class='select_hash_id'>
+                </div>
+            </div>
+        </div></div>`;
+}
 
+/* 인텔리전트 행 조작 및 상태 추적 (CRUD Interaction) */
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('xi-plus')) {
+        const row = e.target.closest('.ai_event_row_item');
+        const type = row.classList.contains('sound') ? 'sound' : 'voice';
+        const container = e.target.closest('.div_ai_event_preset_item');
+        container?.insertAdjacentHTML('beforeend', make_insert_ai_event_list_div(type));
+        e.target.remove(); // 마지막 행에만 플러스 버튼 유지
+    }
+});
 ```
 
 ---
-## 46. Full-Stack Code Showcase: AI Event Orchestration Engine (IP-1015BX AI 엔진 전수 코드화)
+## 46. Full-Stack Code Showcase: AI Event Orchestration Engine (장비A AI 엔진 전수 코드화)
 
 ### 💡 개요
-본 섹션은 IP-1015BX 기기의 AI 이벤트 프리셋 설정 시스템을 구축하기 위해 설계된 **전체 핵심 소스 코드**를 포함합니다. UI의 동적 CRUD, Fetch API 기반의 현대적 통신 표준, 그리고 임베디드 보안 인터랙션을 전수 코드화하여 기록합니다.
+본 섹션은 장비A 기기의 AI 이벤트 프리셋 설정 시스템을 구축하기 위해 설계된 **전체 핵심 소스 코드**를 포함합니다. UI의 동적 CRUD, Fetch API 기반의 현대적 통신 표준, 그리고 임베디드 보안 인터랙션을 전수 코드화하여 기록합니다.
 
 ### 🚀 핵심 성과
 - **실시간 자원 동기화**: TTS를 통해 생성된 음원이 BGM 소스 리스트에 즉시 반영되고, 서버의 상태(`tts_info.json`)와 UI 간의 정합성을 보장하는 양방향 동기화 시퀀스 구축(r6841).
@@ -1316,9 +1365,9 @@ IP-1015BX 기기의 AI 기반 음향 및 음성 이벤트 프리셋 관리 시�
 ### 🛠️ Implementation Example
 ```javascript
 /**
- * [IP-1015BX] Integrated AI Event Management Engine
+ * [장비A] Integrated AI Event Management Engine
  * Includes: Fetch API, Dynamic Row UI, Integrity Validation, XSS Filtering
- * @author kwj97
+ * @author 프론트엔드 개발자
  */
 document.addEventListener('DOMContentLoaded', () => {
     /* 1. 현대적 Fetch API 기반 동기 통신 모듈 */
@@ -1428,7 +1477,7 @@ if(broadcast_tts_id !== ""){
 }
 
 // 존 아이콘 렌더링 최적화: 사용자 지정 이미지 지원 (r6846)
-if(DEF_DEVICE_COMPANY.toLocaleLowerCase() === "hanwha"){
+if(DEF_DEVICE_COMPANY.toLocaleLowerCase() === "company_b"){
     document.querySelectorAll("div[id^=button_" + zone + "_]").forEach(target => {
         const topEl = target.querySelector(".zone_item_top");
         if (topEl) topEl.style.backgroundImage = "url('/modules/source_add/html/data/" + source_img_path + "')";
@@ -1482,7 +1531,7 @@ function execute_core_process() {
 ## 47. Pure Vanilla JS Interface: AI Event Orchestration (순수 자바스크립트 기반 AI 제어 엔진 - CodePen 호환)
 
 ### 💡 개요
-IP-1015BX 프로젝트의 핵심인 AI 이벤트 프리셋 설정 UI를 jQuery 없이 **순수 자바스크립트(Vanilla JS)**로 전면 구현했습니다. 브라우저 표준 API(Fetch, DOM)만을 활용하여 시스템 리소스를 최소화하고 실행 성능을 극대화한 최종 완성본입니다.
+장비A 프로젝트의 핵심인 AI 이벤트 프리셋 설정 UI를 jQuery 없이 **순수 자바스크립트(Vanilla JS)**로 전면 구현했습니다. 브라우저 표준 API(Fetch, DOM)만을 활용하여 시스템 리소스를 최소화하고 실행 성능을 극대화한 최종 완성본입니다.
 
 ### 🛠️ Implementation Example
 ```javascript
@@ -1490,7 +1539,7 @@ IP-1015BX 프로젝트의 핵심인 AI 이벤트 프리셋 설정 UI를 jQuery �
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>IP-1015BX AI Event Setup</title>
+    <title>장비A AI Event Setup</title>
     <style>
         /* 임베디드 특화 그리드 레이아웃 */
         .div_ai_contents_container {
@@ -1540,9 +1589,9 @@ IP-1015BX 프로젝트의 핵심인 AI 이벤트 프리셋 설정 UI를 jQuery �
 
     <script>
         /**
-         * [IP-1015BX] Pure Vanilla JS AI Management Engine
+         * [장비A] Pure Vanilla JS AI Management Engine
          * Migrated from jQuery to Native JS (Fetch, DOM API)
-         * @author kwj97
+         * @author 프론트엔드 개발자
          */
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.querySelector('.div_ai_event_preset_item');
@@ -1643,110 +1692,5 @@ IP-1015BX 프로젝트의 핵심인 AI 이벤트 프리셋 설정 UI를 jQuery �
 ```
 
 ---
-## Full-Stack Code Showcase: AI Event Orchestration Engine (IP-1015BX AI 엔진 전수 코드화)
-
-### 🛠️ Implementation Example
-```javascript
-/* 임베디드 특화 그리드 레이아웃 */
-.ai_event_row_item {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1.5fr 5fr;
-    padding: 12px;
-    align-items: center;
-    border-bottom: 1px solid #444;
-}
-
-/* 상태 머신 기반 시각적 피드백 */
-.insert_item { background-color: rgba(76, 175, 80, 0.15); border-left: 4px solid #4CAF50; }
-.update_item { background-color: rgba(255, 193, 7, 0.15); border-left: 4px solid #FFC107; }
-
-/* 툴팁 해상도 감응 처리 */
-.tooltip {
-    position: fixed; /* 브라우저 스크롤 이슈 해결 */
-    background: #222; border: 1px solid #707070;
-    padding: 8px; z-index: 9999;
-}
-
-/**
- * [IP-1015BX] Integrated AI Event Management Engine
- * Includes: Fetch API, Dynamic Row UI, Integrity Validation, XSS Filtering
- * @author kwj97
- */
-document.addEventListener('DOMContentLoaded', () => {
-    /* 1. 현대적 Fetch API 기반 동기 통신 모듈 */
-    async function sync_fetch_post(_url, _action, _client_data = null) {
-        const payload = { ..._client_data, action: _action };
-        try {
-            const response = await fetch(_url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-            return await response.text();
-        } catch (err) { console.error('Communication Error:', err); return null; }
-    }
-
-    /* 2. 동적 행 생성 엔진 (Self-healing UI) */
-    function make_insert_ai_event_list_div(type) {
-        return `<div class="ai_event_row_item ${type} insert_item">
-            <div class="div_grid_contents">
-                <div class="ai_event_button"><i class="xi-plus"></i><i class="xi-minus"></i></div>
-                <div class="ai_event_name"><input type="text" placeholder="이벤트명"></div>
-                <div class="ai_event_no"><input type="text" placeholder="번호"></div>
-                <div class="ai_event_source_select">
-                    <div class="arrow_position_div">
-                        <input type="text" readonly placeholder="음원 선택"><i class="xi-angle-down-min"></i>
-                        <input type='hidden' class='select_hash_id'>
-                    </div>
-                </div>
-            </div></div>`;
-    }
-
-    /* 3. 인텔리전트 행 조작 및 상태 추적 (CRUD Interaction) */
-    document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('xi-plus')) {
-            const row = e.target.closest('.ai_event_row_item');
-            const type = row.classList.contains('sound') ? 'sound' : 'voice';
-            const container = e.target.closest('.div_ai_event_preset_item');
-            container?.insertAdjacentHTML('beforeend', make_insert_ai_event_list_div(type));
-            e.target.remove(); // 마지막 행에만 플러스 버튼 유지
-        }
-    });
-
-    document.addEventListener('click', async (e) => {
-        if (e.target.classList.contains('xi-minus')) {
-            if (!confirm("삭제하시겠습니까?")) return;
-            const row = e.target.closest('.ai_event_row_item');
-            const f_no = row.getAttribute('f_no');
-            if (f_no) { // DB에 존재하는 행인 경우 서버 통신 후 삭제
-                const res = await sync_fetch_post("common_process.php", "ai_event_preset_delete", { f_no });
-                if (res === "1") row.remove();
-            } else { row.remove(); }
-        }
-    });
-
-    /* 4. 벌크 트랜잭션 수집 및 저장 (Integrity Validation) */
-    document.getElementById('ai_event_preset_save')?.addEventListener('click', async () => {
-        let preset_data = { insert: [], update: [] };
-        let isValid = true;
-        document.querySelectorAll('.ai_event_row_item').forEach(row => {
-            const data = {
-                name: row.querySelector('.ai_event_name input').value,
-                no: row.querySelector('.ai_event_no input').value,
-                source: row.querySelector('.select_hash_id').value
-            };
-            if (!data.name || !data.no || !data.source) {
-                isValid = false; return;
-            }
-            if (row.classList.contains('insert_item')) preset_data.insert.push(data);
-            else if (row.classList.contains('update_item')) preset_data.update.push({ ...data, f_no: row.getAttribute('f_no') });
-        });
-        if (!isValid) return alert("모든 필드를 입력해주세요.");
-        // ... 서버 전송 로직
-    });
-});
-```
-
 ---
 
