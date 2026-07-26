@@ -1,6 +1,6 @@
-# Inter-M REST API 로직 및 함수 전면 리팩토링 포트폴리오 (api_improve.md)
+# 사내 REST API 로직 및 함수 전면 리팩토링 포트폴리오 (api_improve.md)
 
-이 문서는 `api_organize.md`에서 수집한 `interm-api` 내 실제 소스코드와 60개 이상의 함수 및 로직들(`RestAPIFunc`, `get_ip1015bx_audio_dsp_input`, `set_network_interface` 등)을 철저히 분석하여, 이들이 갖고 있던 문제점과 이를 모던 객체지향(OOP) 아키텍처로 어떻게 개선했는지를 실제 코드(Before & After)와 함께 기술한 완벽한 포트폴리오입니다.
+이 문서는 `api_organize.md`에서 수집한 사내 API 프로젝트 내 실제 소스코드와 60개 이상의 함수 및 로직들(`RestAPIFunc`, `get_device_audio_dsp_input`, `set_network_interface` 등)을 철저히 분석하여, 이들이 갖고 있던 문제점과 이를 모던 객체지향(OOP) 아키텍처로 어떻게 개선했는지를 실제 코드(Before & After)와 함께 기술한 완벽한 포트폴리오입니다.
 
 ---
 
@@ -9,7 +9,7 @@
 
 ### 🚨 기존의 문제점
 - **God Class 문제:** `RestAPIFunc` 클래스가 HTTP Digest 파싱 로직, 파일에서 키를 읽는 I/O 로직(`read_digest_file`), 헤더 전송 및 출력 로직(`response()`)을 모두 들고 있어 SRP(단일 책임 원칙)를 위반했습니다.
-- **하드코딩 및 전역 상태:** 사용자 리스트(`/opt/interm/key_data/user_auth_list.json`)나 경로가 클래스 생성자에 하드코딩 되어 있었으며, `$_SERVER` 등 글로벌 변수에 직접 접근해 테스트가 불가능했습니다.
+- **하드코딩 및 전역 상태:** 사용자 리스트(`/opt/company_path/key_data/user_auth_list.json`)나 경로가 클래스 생성자에 하드코딩 되어 있었으며, `$_SERVER` 등 글로벌 변수에 직접 접근해 테스트가 불가능했습니다.
 
 ### 🛠 개선 방법 (Before & After)
 
@@ -69,10 +69,10 @@ class DigestAuthenticator {
 ---
 
 ## 2. 도메인별 API 핸들러 - Audio & DSP (`category_audio.php`, `category_audio_dsp.php`, `category_dsp.php`)
-**분석 대상 핵심 로직:** `getClosestGain()`, `get_ip1015bx_audio_dsp_input()`, `post_ip1015bx_audio_dsp_input()`, `get_dsp_volume_input()`
+**분석 대상 핵심 로직:** `getClosestGain()`, `get_deviceA_audio_dsp_input()`, `post_deviceA_audio_dsp_input()`, `get_dsp_volume_input()`
 
 ### 🚨 기존의 문제점
-- **장비 의존적인 함수명:** `get_ip1015bx_...`, `get_laser_...` 처럼 특정 제품명이 함수명에 하드코딩되어 제품 라인업이 늘어날 때마다 코드가 기하급수적으로 늘어나는 OCP(개방-폐쇄 원칙) 위반 상태였습니다.
+- **장비 의존적인 함수명:** `get_deviceA_...`, `get_deviceB_...` 처럼 특정 제품명이 함수명에 하드코딩되어 제품 라인업이 늘어날 때마다 코드가 기하급수적으로 늘어나는 OCP(개방-폐쇄 원칙) 위반 상태였습니다.
 - **중복 로직:** 배열에서 가장 가까운 값을 찾는 `getClosestGain()` 헬퍼가 카테고리 파일 안에 섞여 있었습니다.
 
 ### 🛠 개선 방법 (Before & After)
@@ -80,12 +80,12 @@ class DigestAuthenticator {
 **[Before] 기존 함수**
 ```php
 <?php
-// 제품명(ip1015bx)이 박혀있는 프로시저럴 함수
-function get_ip1015bx_audio_dsp_input() {
-    // 1015bx 장비 전용 오디오 처리...
+// 특정 제품명이 박혀있는 프로시저럴 함수
+function get_deviceA_audio_dsp_input() {
+    // 특정 장비 전용 오디오 처리...
 }
 
-function post_ip1015bx_audio_dsp_input($_req_data) {
+function post_deviceA_audio_dsp_input($_req_data) {
     // 저장 로직...
 }
 ?>
@@ -101,7 +101,7 @@ class AudioDspController implements ApiController {
     private DspServiceFactory $dspFactory;
 
     public function getInput(Request $request): Response {
-        $deviceModel = $request->getDeviceModel(); // ex: 'ip1015bx'
+        $deviceModel = $request->getDeviceModel(); // ex: 'deviceA'
         
         // 다형성을 이용해 장비별 서비스(Strategy) 호출
         $dspService = $this->dspFactory->make($deviceModel);
@@ -114,7 +114,7 @@ class AudioDspController implements ApiController {
 ```
 
 ### 💡 기대 효과 및 결과
-- **OCP(개방-폐쇄 원칙) 만족:** 새로운 장비(예: `ip2000`)가 추가되어도 컨트롤러를 수정할 필요 없이 `Ip2000DspService` 클래스만 추가하면 되어 확장이 극도로 유연해졌습니다.
+- **OCP(개방-폐쇄 원칙) 만족:** 새로운 장비(예: `deviceB`)가 추가되어도 컨트롤러를 수정할 필요 없이 `DeviceBDspService` 클래스만 추가하면 되어 확장이 극도로 유연해졌습니다.
 
 ---
 
