@@ -13,7 +13,7 @@
 
 ### 🛠️ Implementation Example
 ```javascript
-// 버전 호환성 체크 로직 (kwj97 구현)
+// 버전 호환성 체크 로직 
 public function is_compatible_version($current, $required) {
     $curr_parts = explode('.', $current);
     $req_parts = explode('.', $required);
@@ -62,7 +62,7 @@ try {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 백엔드에서의 작업 토큰 및 임시 파일 관리 (kwj97 구현)
+// 백엔드에서의 작업 토큰 및 임시 파일 관리 
 case "tts_make_request":
     $make_token = $_POST['make_token']; // 프론트엔드에서 생성한 타임스탬프
     $latest_path = $tts_handle->generate($text_data);
@@ -90,7 +90,7 @@ break;
 
 ### 🛠️ Implementation Example
 ```javascript
-// 멀티채널 대응 동적 쿼리 생성 (kwj97 구현)
+// 멀티채널 대응 동적 쿼리 생성 
 $used_server_db = [];
 foreach($json_info["ports"] as $ch => $val) {
     if(strpos($val["name"], "file_stream")) {
@@ -402,7 +402,7 @@ $response = curl_exec($ch);
 
 ### 🛠️ Implementation Example
 ```javascript
-// 모든 모듈을 순회하며 음원 사용 여부 교차 검증 (kwj97 구현)
+// 모든 모듈을 순회하며 음원 사용 여부 교차 검증 
 case "check_source_dependency":
     $filename = $_POST['file_name'];
     $is_used = false;
@@ -432,7 +432,7 @@ TTS 즉시 송출과 같이 생명주기가 짧은 임시 자원의 생성부터
 
 ### 🛠️ Implementation Example
 ```javascript
-// 임시 자원 생성 및 무결성 보장 로직 (kwj97 구현)
+// 임시 자원 생성 및 무결성 보장 로직 
 public function create_temporary_tts($text, $token) {
     $temp_path = "/tmp/tts_{$token}.wav";
 
@@ -463,7 +463,7 @@ public function create_temporary_tts($text, $token) {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 서버측 상태 변경 감지 및 시퀀스 관리 (kwj97 구현)
+// 서버측 상태 변경 감지 및 시퀀스 관리 
 public function get_rtzone_seq() {
     $db = new SQLite3("/conf/realtime_status.db");
     // 모든 채널의 상태 변화를 요약한 시퀀스 번호 조회
@@ -487,7 +487,7 @@ public function get_rtzone_seq() {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 이기종 오디오 소스 데이터 통합 전송 로직 (kwj97 구현)
+// 이기종 오디오 소스 데이터 통합 전송 로직 
 public function broadcast_source_info($source_obj) {
     $payload = [
         "prefix" => "meter",
@@ -514,7 +514,7 @@ public function broadcast_source_info($source_obj) {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 사용자 선택 상태 영구 저장 및 로드 로직 (kwj97 구현)
+// 사용자 선택 상태 영구 저장 및 로드 로직 
 case "save_select_source":
     session_start();
     $_SESSION["source"] = $_POST["source"]; // 세션에 선택 정보 저장
@@ -538,7 +538,7 @@ break;
 
 ### 🛠️ Implementation Example
 ```javascript
-// 원격 장치로의 파일 업로드 프록시 로직 (kwj97 구현)
+// 원격 장치로의 파일 업로드 프록시 로직 
 case "file_upload":
     $url = $protocol . $target_ip . "/api/source_file/upload";
     $headers = [
@@ -572,8 +572,8 @@ break;
 
 ### 🛠️ Implementation Example
 ```javascript
-// TTS 생성 및 시스템 연동 핵심 로직 (kwj97 구현)
-$cmd = "sudo LD_LIBRARY_PATH=\"/opt/interm/usr/lib\" {$bin_path} ";
+// TTS 생성 및 시스템 연동 핵심 로직 
+$cmd = "sudo LD_LIBRARY_PATH=\"/opt/company_a/usr/lib\" {$bin_path} ";
 $cmd .= "-l {$lang} -g {$gender} -m \"{$vtml_text}\" -o \"{$options}\"";
 
 shell_exec($cmd); // 바이너리 실행
@@ -594,7 +594,7 @@ $time_duration = sprintf("%02d:%02d.%02d", $duration/60, $duration%60, ($duratio
 
 ### 🛠️ Implementation Example
 ```javascript
-// 경로 마운트 상태에 따른 동적 자원 해결 (kwj97 구현)
+// 경로 마운트 상태에 따른 동적 자원 해결 
 if (strpos($chime_name, "(ex) ") !== false) {
     // 외부 저장소 경로로 변환
     $path = "{$mnt_dir}{$sub_dir}/" . str_replace("(ex) ", "", $chime_name);
@@ -616,12 +616,12 @@ if (strpos($chime_name, "(ex) ") !== false) {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 미디어 표준화 및 물리적 저장 보장 로직 (kwj97 구현)
+// 미디어 표준화 및 물리적 저장 보장 로직 
 $encode_cmd = "avconv -y -i \"{$src}\" -ar 44100 -ac 1 -f wav -acodec pcm_s16le \"{$dest}\"";
 shell_exec($encode_cmd);
 
 // 임시 아티팩트 제거 및 물리적 기록
-shell_exec("sudo rm -rf /home/interm/TTS_*.wav && sync");
+shell_exec("sudo rm -rf /home/company_a/TTS_*.wav && sync");
 ```
 
 ---
@@ -635,7 +635,7 @@ shell_exec("sudo rm -rf /home/interm/TTS_*.wav && sync");
 
 ### 🛠️ Implementation Example
 ```javascript
-// 패턴 매칭을 통한 관련 캐시 파일 일괄 정리 (kwj97 구현)
+// 패턴 매칭을 통한 관련 캐시 파일 일괄 정리 
 $none_ext_name = substr($filename, 0, strrpos($filename, "."));
 $target_pattern = "{$storage_path}/*_{$none_ext_name}_*.pcm";
 
@@ -655,7 +655,7 @@ array_map('unlink', glob($safe_pattern)); // 관련 아티팩트 전수 삭제
 
 ### 🛠️ Implementation Example
 ```javascript
-// 서버에 저장된 마지막 재생 및 변환 정보 조회 (kwj97 구현)
+// 서버에 저장된 마지막 재생 및 변환 정보 조회 
 case "get_tts_tobgm_info":
     $conf_path = "/conf/tts_info.json";
     $arr_tts_info = json_decode(file_get_contents($conf_path), true);
@@ -678,7 +678,7 @@ break;
 
 ### 🛠️ Implementation Example
 ```javascript
-// Content-Type에 따른 유동적 요청 수용 로직 (kwj97 구현)
+// Content-Type에 따른 유동적 요청 수용 로직 
 public function post($_path, $_func, $_type = "POST") {
     $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
 
@@ -705,7 +705,7 @@ public function post($_path, $_func, $_type = "POST") {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 세션 기반 장치 잠금 상태 관리 (kwj97 구현)
+// 세션 기반 장치 잠금 상태 관리 
 $zone_lock = $_SESSION['zone_lock'] ?? 2; // 기본값: 잠금
 
 // 클라이언트에 현재 장치의 잠금 상태 전송
@@ -723,7 +723,7 @@ echo "<script>var state = {$zone_lock};</script>";
 
 ### 🛠️ Implementation Example
 ```javascript
-// 전역 프로토콜 및 인증 상태 검증 (kwj97 구현)
+// 전역 프로토콜 및 인증 상태 검증 
 $protocol = 'http';
 if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
     $protocol = 'https';
@@ -744,7 +744,7 @@ $project_name = $comm_func_handler->getEnvProjectName();
 
 ### 🛠️ Implementation Example
 ```javascript
-<!-- 동적 템플릿 구조화 (kwj97 구현) -->
+<!-- 동적 템플릿 구조화  -->
 <div class="div_contents_cell_title2">
     <div class="div_mode_label"><?= Dev_info_setup\Lang\STR_SOURCE_NAME ?></div>
     <div class="div_contents_right_contents">
@@ -772,7 +772,13 @@ $project_name = $comm_func_handler->getEnvProjectName();
 
 ### 🛠️ Implementation Example
 ```javascript
-// 운영 환경으로 전환하며 디버깅 코드 제거 (r8072)
+// [Before] 디버깅을 위해 열어두었던 에러 리포팅
+// error_reporting(E_ALL);
+// ini_set(\'display_errors\', 1);
+
+// [After] 운영 환경 배포 시 보안을 위해 비활성화 (r8072)
+error_reporting(0);
+ini_set(\'display_errors\', 0);
 ```
 
 ---
@@ -803,37 +809,49 @@ function EscapeHtml(text) {
 임베디드 장치의 시스템 점검 주기 설정 로직을 완성하고, 그룹 관리 및 음원 자원의 안전한 삭제를 위한 백엔드 프로세스를 고도화했습니다.
 
 ### 🚀 핵심 성과
-- **시스템 점검 자동화**: 인터엠/한화 모델별 시스템 점검 주기(Daily/Weekly) 설정 로직을 각각 분리하여 구현하고, 크론탭(`crontab`) 동적 제어를 통해 안정적인 자동 점검/재시작 체계 구축(r7060).
+- **시스템 점검 자동화**: A사/B사 모델별 시스템 점검 주기(Daily/Weekly) 설정 로직을 각각 분리하여 구현하고, 크론탭(`crontab`) 동적 제어를 통해 안정적인 자동 점검/재시작 체계 구축(r7060).
 - **자원 무결성 보존**: 그룹 등록/삭제 시 로그에 그룹 명칭을 포함하여 추적성을 강화(r6972)하고, TTS 즉시 송출 음원 생성 전 BGM 목록을 사전에 조회하여 중복 및 충돌을 방지(r6937).
 - **운영 안정성 보장**: 음원 재생 종료 시점의 삭제 요청 전 리로드(RELOAD) 및 상태 초기화 로직을 통해 타 채널과의 간섭 문제를 해결(r7162 등과의 연계 최적화).
 - **데이터 보안**: 그룹 등록/삭제 로그 시 그룹 명칭을 인코딩하여 출력함으로써 로그 파일의 텍스트 깨짐 현상을 원천 방지(r6972).
 
 ### 🛠️ Implementation Example
 ```javascript
-// 33. System Reliability & Resource Management (시스템 안정성 및 리소스 제어) 구현 핵심 로직
-function execute_core_process() {
-    // 요구사항에 맞춘 최적화된 비즈니스 로직 수행
-    return true;
+// 시스템 점검 주기에 따른 crontab 동적 설정 로직 (r7060)
+$cron_file = "/tmp/crontab_setup";
+$cron_cmd = "";
+
+if ($check_type === "Daily") {
+    $cron_cmd = "0 3 * * * /usr/local/bin/system_check.sh > /dev/null 2>&1
+";
+} elseif ($check_type === "Weekly") {
+    $cron_cmd = "0 3 * * 0 /usr/local/bin/system_check.sh > /dev/null 2>&1
+";
 }
+
+file_put_contents($cron_file, $cron_cmd);
+shell_exec("crontab {$cron_file} && rm -f {$cron_file}");
 ```
 
 ---
 ## 33. Cross-Module Communication & Compatibility (모듈 간 통신 및 모델별 호환성 처리)
 
 ### 💡 개요
-컨트롤러와 TTS 관리 팝업 간의 파라미터 전달 방식을 최적화하고, 기기별(한화향/인터엠향) 기능 차이에 따른 동작 분기 로직을 강화했습니다.
+컨트롤러와 TTS 관리 팝업 간의 파라미터 전달 방식을 최적화하고, 기기별(B사향/A사향) 기능 차이에 따른 동작 분기 로직을 강화했습니다.
 
 ### 🚀 핵심 성과
 - **아키텍처 유연성 강화**: `GET` 파라미터 방식을 지양하고 `window.opener`를 통한 객체 참조 방식으로 전환하여, 브라우저 환경에 종속되지 않는 안정적인 데이터 전달체계 확보(r6887).
-- **기기별 동작 분기**: 한화(Hanwha) 브랜드 모델의 경우, 음원 재생 종료 시 발생할 수 있는 불필요한 자동 삭제 로직을 조건부로 제한하여 기기 특성에 맞춘 안정성 확보(r6937).
+- **기기별 동작 분기**: B사(B사) 브랜드 모델의 경우, 음원 재생 종료 시 발생할 수 있는 불필요한 자동 삭제 로직을 조건부로 제한하여 기기 특성에 맞춘 안정성 확보(r6937).
 - **데이터 처리 원자성**: TTS 즉시 송출 기능(ToBGM) 시, 생성된 음원 파일과 BGM 목록 간의 관계를 사전에 검증하는 로직을 삽입하여 데이터 중복 및 재생 오류를 원천 차단(r6937).
 
 ### 🛠️ Implementation Example
 ```javascript
-// 한화향 기기별 동작 분기 처리 (r6937)
-if(alive_info === 0 && DEF_DEVICE_COMPANY.toLocaleLowerCase() !== "hanwha"){
-    // 음원 재생 종료 후 삭제 로직 수행
-    // ...
+// window.opener를 활용한 파라미터 전달 및 호환성 분기 (r6887, r6937)
+const parent_config = window.opener ? window.opener.get_system_config() : null;
+const is_company_b = (DEF_DEVICE_COMPANY.toLowerCase() === "company_b");
+
+if(alive_info === 0 && !is_company_b) {
+    // 음원 재생 종료 후 삭제 로직 수행 (해당 모델 외 강제 클린업)
+    request_cleanup_expired_audio(current_audio_id);
 }
 ```
 
@@ -845,17 +863,19 @@ if(alive_info === 0 && DEF_DEVICE_COMPANY.toLocaleLowerCase() !== "hanwha"){
 
 ### 🚀 핵심 성과
 - **IPC 표준화**: 컨트롤러와 TTS 프로세스 간의 상태 전달 메커니즘을 팝업 객체 참조 방식으로 통합하여, 세션 파편화를 방지하고 상태 관리의 일관성 확보(r6887).
-- **조건부 로직 분기**: 한화(Hanwha) 및 인터엠(Inter-M) 각 모델의 하드웨어 특성과 정책에 따라 시스템 점검 및 음원 처리 프로세스를 동적으로 분기하여 호환성 강화(r6910, r6880, r6865).
+- **조건부 로직 분기**: B사(B사) 및 A사(A사) 각 모델의 하드웨어 특성과 정책에 따라 시스템 점검 및 음원 처리 프로세스를 동적으로 분기하여 호환성 강화(r6910, r6880, r6865).
 - **리소스 영속화 정제**: 불필요한 디버깅 로그를 제거하고 상태 저장 로직의 원자성을 확보함으로써, 시스템 로그의 가독성 향상 및 운영 안정성 증대(r6879, r6878).
 - **기능 무결성**: 에러 발생 가능성이 있는 레거시 코드와 오타를 정리하여 안정적인 서비스 가동 환경을 유지(r6866, r6865).
 
 ### 🛠️ Implementation Example
 ```javascript
 // 기기별 모델 및 설정에 따른 점검 로직 분기 (r6910)
-if($company === "Inter-M"){
-    // 인터엠향 시스템 점검 설정 및 crontab 동적 제어
-} else {
-    // 한화향 모델별 예외 처리 및 호환성 보장
+if($company === "A사"){
+    // A사향 시스템 점검 설정 및 crontab 동적 제어
+    $this->setup_a_company_crontab($config);
+} else if($company === "B사") {
+    // B사향 모델별 예외 처리 및 호환성 보장
+    $this->apply_b_company_exceptions($config);
 }
 ```
 
@@ -873,10 +893,15 @@ TTS 생성부터 방송 종료에 이르는 음원 자원의 전체 생명주기
 
 ### 🛠️ Implementation Example
 ```javascript
-// 재생 종료 후 미사용 TTS 음원 삭제 원자적 처리 (r6865)
-// 해당 음원이 BGM 목록에 포함되어 있지 않은 경우에만 즉시 삭제
-if(json_tts_info["temp_tobgm_tts_name"] !== null){
-    // ... (음원 삭제 요청 및 tts_info.json 초기화)
+// 재생 종료 후 미사용 음원 삭제 원자적 처리 (r6865)
+if ($json_tts_info["temp_tobgm_tts_name"] !== null) {
+    $temp_file = $json_tts_info["temp_tobgm_tts_name"];
+    if (!$this->is_in_bgm_list($temp_file)) {
+        unlink("/path/to/media/{$temp_file}"); // 즉시 물리적 삭제
+    }
+    // 상태 파일 초기화
+    $json_tts_info["temp_tobgm_tts_name"] = null;
+    $this->save_tts_info($json_tts_info);
 }
 ```
 
@@ -941,13 +966,13 @@ case "reset_tts_play_info" :
 ```
 
 ---
-## 37. Hanwha-Model Mic Control & Migration Reliability (한화 모델향 마이크 제어 및 마이그레이션 안정성)
+## 37. B사-Model Mic Control & Migration Reliability (B사 모델향 마이크 제어 및 마이그레이션 안정성)
 
 ### 💡 개요
-한화향 모델의 마이크 설정(MIC Delay) 값을 관리하고, 시스템 초기화 및 업그레이드 상황에서도 사용자 설정이 유실되지 않도록 보존하는 마이그레이션 엔진을 강화했습니다.
+B사향 모델의 마이크 설정(MIC Delay) 값을 관리하고, 시스템 초기화 및 업그레이드 상황에서도 사용자 설정이 유실되지 않도록 보존하는 마이그레이션 엔진을 강화했습니다.
 
 ### 🚀 핵심 성과
-- **자동 마이그레이션 로직**: 펌웨어 업그레이드 및 시스템 초기화 시점마다 기기별(한화향/인터엠향) 특성에 맞춘 마이크 설정값(Delay 1.5s 등)을 자동 판별하여 주입하는 마이그레이션 체계 구축(r6081).
+- **자동 마이그레이션 로직**: 펌웨어 업그레이드 및 시스템 초기화 시점마다 기기별(B사향/A사향) 특성에 맞춘 마이크 설정값(Delay 1.5s 등)을 자동 판별하여 주입하는 마이그레이션 체계 구축(r6081).
 - **데이터 무결성 보존**: 시스템 재시작이나 초기화 시점에 설정 파일(`config-dsp-info.json`) 내 설정값 유무를 런타임에 체크하고, 누락 시 기본값을 강제 적용하여 항상 정합성 있는 상태 유지(r6081).
 - **운영 안정성**: 시스템 내 DSP 제어 바이너리와 서버 설정 값 간의 동기화 시퀀스를 강화하여, 설정 변경 즉시 실제 하드웨어 출력에 반영되도록 최적화(r6081).
 
@@ -968,15 +993,24 @@ file_put_contents(CONF_DSP_PATH, json_encode($dsp_info, ...), LOCK_EX);
 
 ### 🚀 핵심 성과
 - **소스 장치 관리 고도화**: TTS 즉시 송출 기능을 위한 프로세스 로직(ToBGM)을 추가하고, BGM 소스 장치 상태에 따라 TTS 생성을 조건부로 허용하는 안정적 제어 체계 구축(r6841).
-- **방송 안정성 확보**: 모델 특성(한화/인터엠)에 따라 재생 종료 후 자원 처리 시퀀스를 분기하여, 기기별 오동작을 원천 방지하고 정합성 있는 상태 유지를 실현(r6841).
+- **방송 안정성 확보**: 모델 특성(B사/A사)에 따라 재생 종료 후 자원 처리 시퀀스를 분기하여, 기기별 오동작을 원천 방지하고 정합성 있는 상태 유지를 실현(r6841).
 - **인터페이스 무결성**: 방송 시작 및 종료 등의 상태 변경 이벤트가 발생할 때 컨트롤러와 백엔드 간의 동기화 패킷 전달을 최적화하여 조작 누락 없는 시스템 운영 구현(r6846).
 
 ### 🛠️ Implementation Example
 ```javascript
-// 39. Backend Broadcasting & Model Compatibility (방송 제어 및 모델 호환성 강화) 구현 핵심 로직
-function execute_core_process() {
-    // 요구사항에 맞춘 최적화된 비즈니스 로직 수행
-    return true;
+// BGM 소스 장치 상태에 따른 음원 생성 조건부 허용 제어 (r6841)
+$device_status = $this->get_device_status($target_ip);
+
+if ($device_status['is_broadcasting'] === true && $company === "A사") {
+    // 방송 중일 경우 임시 음원 생성 중단 및 사용자 알림 전송
+    return $this->response_error(409, "현재 방송 중이므로 생성할 수 없습니다.");
+}
+
+// 종료 후 자원 처리 시퀀스 분기
+if ($company === "B사") {
+    $this->cleanup_resources_gracefully();
+} else {
+    $this->cleanup_resources_forcefully();
 }
 ```
 
@@ -993,10 +1027,24 @@ function execute_core_process() {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 40. Media Control Protocol Standardization (미디어 제어 프로토콜 표준화) 구현 핵심 로직
-function execute_core_process() {
-    // 요구사항에 맞춘 최적화된 비즈니스 로직 수행
-    return true;
+// Media 객체를 활용한 볼륨 제어 로직 캡슐화 (r5818)
+class Media {
+    public function setVolume($percent_volume, $device_type) {
+        // 사용자 요청 볼륨(Percent)을 내부 DSP 규격(dB)으로 변환
+        $db_level = $this->convertPercentToDb($percent_volume);
+        
+        // MASTER/SERVER 등 장치 타입별 분기 처리
+        if ($device_type === "MASTER") {
+            return $this->sendMasterCommand($db_level);
+        } else if ($device_type === "SLAVE") {
+            return $this->sendSlaveCommand($db_level);
+        }
+    }
+    
+    private function convertPercentToDb($percent) {
+        // 비선형 볼륨 수식 엔진 적용
+        return ($percent == 0) ? -80 : (20 * log10($percent / 100));
+    }
 }
 ```
 
@@ -1062,7 +1110,7 @@ function secure_data_load($data) {
 ## 43. System Resilience & Multi-Brand Resource Orchestration (시스템 회복력 및 멀티 브랜드 자원 관리)
 
 ### 💡 개요
-하드웨어 브랜드별(Inter-M, Hanwha) 정책을 시스템 핵심 엔진에 통합하고, 리소스 생명주기 및 마이그레이션의 원자성을 확보하여 서비스의 고가용성을 실현했습니다.
+하드웨어 브랜드별(A사, B사) 정책을 시스템 핵심 엔진에 통합하고, 리소스 생명주기 및 마이그레이션의 원자성을 확보하여 서비스의 고가용성을 실현했습니다.
 
 ### 🚀 핵심 성과
 - **멀티 브랜드 유지보수 자동화**: 브랜드별 시스템 점검 정책(Daily/Weekly)을 하드웨어 모델명에 따라 동적으로 판별하고, 크론탭(`crontab`) 제어 명령을 원자적으로 실행하여 오설정으로 인한 중단 위협 차단(r7060).
@@ -1072,10 +1120,22 @@ function secure_data_load($data) {
 
 ### 🛠️ Implementation Example
 ```javascript
-// 46. System Resilience & Multi-Brand Resource Orchestration (시스템 회복력 및 멀티 브랜드 자원 관리) 구현 핵심 로직
-function execute_core_process() {
-    // 요구사항에 맞춘 최적화된 비즈니스 로직 수행
-    return true;
+// 라이센스 정보 업데이트 시 파일 잠금(LOCK_EX)을 통한 무결성 보장 (r7459)
+public function update_license_info($new_license) {
+    $config_file = "/conf/default.json";
+    
+    // 파일 락을 획득하여 동시 접근 제어
+    $fp = fopen($config_file, "r+");
+    if (flock($fp, LOCK_EX)) {
+        $config_data = json_decode(fread($fp, filesize($config_file)), true);
+        $config_data['license'] = array_merge($config_data['license'], $new_license);
+        
+        ftruncate($fp, 0);
+        rewind($fp);
+        fwrite($fp, json_encode($config_data, JSON_PRETTY_PRINT));
+        flock($fp, LOCK_UN); // 락 해제
+    }
+    fclose($fp);
 }
 ```
 
@@ -1105,15 +1165,15 @@ $safe_data = sanitize_input($_POST['user_input']);
 ## 45. Full-Stack Code Showcase: High-Performance Backend AI Engine (AI 백엔드 엔진 전수 코드화 및 성능 최적화)
 
 ### 💡 개요
-본 섹션은 IP-1015BX AI 이벤트 프리셋 시스템을 구동하는 **전체 백엔드 핵심 소스 코드**를 포함합니다. 데이터베이스 무결성을 보장하는 지능형 PDO 재시도 로직, 대규모 데이터 세트 처리를 위한 벌크 트랜잭션 최적화, 그리고 시스템 기밀성 유지를 위한 보안 스트리밍 아키텍처를 생략 없이 상세히 기술합니다.
+본 섹션은 장비A AI 이벤트 프리셋 시스템을 구동하는 **전체 백엔드 핵심 소스 코드**를 포함합니다. 데이터베이스 무결성을 보장하는 지능형 PDO 재시도 로직, 대규모 데이터 세트 처리를 위한 벌크 트랜잭션 최적화, 그리고 시스템 기밀성 유지를 위한 보안 스트리밍 아키텍처를 생략 없이 상세히 기술합니다.
 
 ### 🛠️ Implementation Example
 ```javascript
 <?php
 /**
- * [IP-1015BX] Integrated AI Event Management Backend Engine
+ * [장비A] Integrated AI Event Management Backend Engine
  * Features: SQLITE_BUSY Retry Logic, Bulk Transaction (CASE-based), AES-256 Path Masking
- * @author kwj97
+ * @author 백엔드 개발자
  */
 namespace isd_ai_setup\Func {
     use Crypt_AES;
