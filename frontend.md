@@ -189,8 +189,6 @@ for (var i = 0; i < files_data.length; i++) {
 
 Transferable은 브라우저 간 바이너리 전달에서 불필요한 데이터 복사를 줄이기 위한 경로로 사용했으며, 모든 메모리 복사가 사라지는 `Zero-copy`로 확대해서 표현하지 않습니다.
 
-실제 전송 시간, 메모리, CPU, 서버 Proxy 부담, 사용자 대기시간 변화는 측정 후 추가할 수 있습니다.
-
 ---
 
 # 03. Binary WebSocket 데이터를 Header 기준으로 해석했습니다
@@ -224,7 +222,6 @@ const length =
 
 WebSocket으로 들어오는 여러 장치 데이터를 Command 단위로 구분해 필요한 처리 흐름으로 연결할 수 있게 했습니다.
 
-실제 처리량과 latency는 측정 후 추가할 수 있습니다.
 
 ---
 
@@ -375,8 +372,6 @@ TTS 생성 → 목록 반영 → 재생이라는 흐름이 연결되어 별도�
 
 화면에서 실제로 필요한 상태를 중심으로 렌더링 범위를 좁혔습니다.
 
-CPU/Memory 사용량이나 실제 렌더링 시간 변화는 측정 후 추가할 수 있습니다.
-
 ---
 
 # 08. AI Event Preset의 화면 상태를 서버 저장 단위와 연결했습니다
@@ -438,8 +433,6 @@ Backend
 - Event Delegation
 - Client Validation
 - Fetch 기반 비동기 통신
-
-Backend의 저장 구조는 별도 Backend 사례에서 이어집니다.
 
 ---
 
