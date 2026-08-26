@@ -43,8 +43,6 @@ final class AppConfig
 
 설정 접근과 요청 처리 책임이 분리됐고, 설정 소스 변경 시 영향을 받는 범위를 줄일 수 있는 구조가 됐습니다.
 
-실제 변경 파일 수나 유지보수 시간 변화는 별도 측정이 필요합니다.
-
 ---
 
 # 02. 브라우저를 막던 동기 HTTP 요청을 공통 비동기 Client로 전환했습니다
@@ -83,8 +81,6 @@ class HttpClient {
 - `async: false` 제거
 - Fetch / async-await 기반 공통 처리
 - HTTP 오류를 예외/Promise 흐름으로 전달
-
-실제 브라우저 blocking time이나 응답시간 전후 비교는 별도 측정이 필요합니다.
 
 ---
 
@@ -197,8 +193,6 @@ Temporary Archive Cleanup
 - 업로드 경로 검증
 - 외부 `tar` 실행 제거
 - 임시 archive 삭제
-
-압축 내부 경로에 대한 추가 검증까지 모두 해결한 사례로 확대해서 표현하지 않습니다.
 
 ---
 
